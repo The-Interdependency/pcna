@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://pcna/schemas/sentinel_verdict.schema.json",
+  "title": "SentinelVerdict",
+  "type": "object",
+  "required": ["meta_id", "tick", "sentinel_id", "scores", "recommendation"],
+  "properties": {
+    "meta_id": { "type": "integer" },
+    "sentinel_id": { "type": "integer" },
+    "scores": { 
+      "type": "object",
+      "required": ["integrity", "conservation", "phase", "adversarial"] 
+    },
+    "recommendation": { "enum": ["HEALTHY", "DEGRADED", "QUARANTINE"] }
+  }
+}

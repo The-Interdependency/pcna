@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://pcna/schemas/meta_report.schema.json",
+  "title": "MetaReport",
+  "type": "object",
+  "required": ["meta_id", "tick", "mass_total", "radius", "phase"],
+  "properties": {
+    "meta_id": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "tick": { "type": "integer", "minimum": 0 },
+    "mass_total": { "type": "number" },
+    "radius": { "type": "number" },
+    "phase": { "type": "number" },
+    "quorum_signatures": { "type": "array", "minItems": 4 }
+  }
+}
