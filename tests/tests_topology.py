@@ -1,5 +1,5 @@
 import pytest
-from src.core.topology import PCNATopology, SeedRole
+from main.core.topology import PCNATopology, SeedRole
 
 
 def test_meta_router_count_and_positions():
