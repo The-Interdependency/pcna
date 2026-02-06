@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const SMSConsole = ({ backendUrl }) => {
   const [command, setCommand] = useState('');
-  const [console History, setConsoleHistory] = useState([
+  const [consoleHistory, setConsoleHistory] = useState([
     {
       type: 'system',
       content: 'SMS Console initialized in MOCK mode. Messages will be logged only.',
