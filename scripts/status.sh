@@ -8,7 +8,7 @@ echo ""
 
 # Service Status
 echo "📊 Service Status:"
-sudo supervisorctl status
+supervisorctl status
 echo ""
 
 # Backend Health
