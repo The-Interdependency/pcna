@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# PCNA Quick Commands
+# Run this script to access common commands easily
+
+echo "╔════════════════════════════════════════════════╗"
+echo "║       PCNA System - Quick Access Commands      ║"
+echo "╚════════════════════════════════════════════════╝"
+echo ""
+
+# Set PATH to ensure supervisorctl is found
+export PATH=/usr/bin:/usr/sbin:/usr/local/bin:$PATH
+
+case "$1" in
+    status)
+        echo "📊 Checking system status..."
+        /usr/bin/supervisorctl status
+        ;;
+    
+    health)
+        echo "🏥 Checking system health..."
+        curl -s http://localhost:8001/api/system-health | python3 -m json.tool
+        ;;
+    
+    restart)
+        echo "🔄 Restarting services..."
+        /usr/bin/supervisorctl restart all
+        ;;
+    
+    restart-backend)
+        echo "🔄 Restarting backend..."
+        /usr/bin/supervisorctl restart backend
+        ;;
+    
+    restart-frontend)
+        echo "🔄 Restarting frontend..."
+        /usr/bin/supervisorctl restart frontend
+        ;;
+    
+    logs-backend)
+        echo "📜 Backend logs (Ctrl+C to exit)..."
+        tail -f /var/log/supervisor/backend.err.log
+        ;;
+    
+    logs-frontend)
+        echo "📜 Frontend logs (Ctrl+C to exit)..."
+        tail -f /var/log/supervisor/frontend.out.log
+        ;;
+    
+    test)
+        echo "🧪 Running system tests..."
+        /app/scripts/status.sh
+        ;;
+    
+    *)
+        echo "Usage: $0 {command}"
+        echo ""
+        echo "Available commands:"
+        echo "  status           - Show service status"
+        echo "  health           - Check system health"
+        echo "  restart          - Restart all services"
+        echo "  restart-backend  - Restart backend only"
+        echo "  restart-frontend - Restart frontend only"
+        echo "  logs-backend     - View backend logs"
+        echo "  logs-frontend    - View frontend logs"
+        echo "  test             - Run full system test"
+        echo ""
+        echo "Examples:"
+        echo "  $0 status"
+        echo "  $0 health"
+        echo "  $0 restart"
+        echo ""
+        echo "Or use direct commands:"
+        echo "  /usr/bin/supervisorctl status"
+        echo "  /usr/bin/supervisorctl restart all"
+        ;;
+esac
