@@ -1,0 +1,122 @@
+╔════════════════════════════════════════════════════════════════╗
+║                  PCNA AGENT SYSTEM - HOW TO USE                ║
+╚════════════════════════════════════════════════════════════════╝
+
+⚠️  IMPORTANT: You're running as ROOT - DO NOT use 'sudo'!
+
+┌────────────────────────────────────────────────────────────────┐
+│ WRONG ❌                    │ CORRECT ✅                        │
+├────────────────────────────────────────────────────────────────┤
+│ sudo supervisorctl status   │ supervisorctl status             │
+│ sudo supervisorctl restart  │ supervisorctl restart all        │
+│ sudo tail -f /var/log/...   │ tail -f /var/log/...            │
+└────────────────────────────────────────────────────────────────┘
+
+════════════════════════════════════════════════════════════════
+
+📊 QUICK STATUS CHECK
+────────────────────────────────────────────────────────────────
+Command: /app/scripts/status.sh
+
+This checks:
+  ✓ Service status
+  ✓ Backend health
+  ✓ System health
+  ✓ Active seeds
+  ✓ LLM integration
+
+════════════════════════════════════════════════════════════════
+
+🎮 CONTROL SERVICES
+────────────────────────────────────────────────────────────────
+Check status:        supervisorctl status
+Restart everything:  supervisorctl restart all
+Restart backend:     supervisorctl restart backend
+Restart frontend:    supervisorctl restart frontend
+Stop all:            supervisorctl stop all
+Start all:           supervisorctl start all
+
+════════════════════════════════════════════════════════════════
+
+📜 VIEW LOGS
+────────────────────────────────────────────────────────────────
+Backend errors:   tail -f /var/log/supervisor/backend.err.log
+Frontend output:  tail -f /var/log/supervisor/frontend.out.log
+MongoDB:          tail -f /var/log/mongodb/mongod.log
+
+Last 50 lines:    tail -50 /var/log/supervisor/backend.err.log
+
+════════════════════════════════════════════════════════════════
+
+🌐 ACCESS YOUR SYSTEM
+────────────────────────────────────────────────────────────────
+Dashboard:    http://localhost:3000
+Backend API:  http://localhost:8001
+API Docs:     http://localhost:8001/docs
+
+════════════════════════════════════════════════════════════════
+
+🧪 TEST COMMANDS
+────────────────────────────────────────────────────────────────
+System health:
+  curl http://localhost:8001/api/system-health
+
+Test LLM:
+  curl -X POST http://localhost:8001/api/llm/chat \
+    -H "Content-Type: application/json" \
+    -d '{"prompt":"Hello","provider":"openai","model":"gpt-5.2"}'
+
+Run EDCM:
+  curl http://localhost:8001/api/edcm/analyze
+
+════════════════════════════════════════════════════════════════
+
+📚 DOCUMENTATION
+────────────────────────────────────────────────────────────────
+All commands:        /app/COMMANDS.md
+Quick start:         /app/QUICK_START.md
+Installation guide:  /app/INSTALLATION_GUIDE.md
+Full README:         /app/PROJECT_README.md
+System status:       /app/SYSTEM_STATUS.md
+
+════════════════════════════════════════════════════════════════
+
+🎯 HELPER SCRIPTS
+────────────────────────────────────────────────────────────────
+/app/scripts/status.sh         - System status check
+/app/scripts/commands.sh       - Show all commands
+/app/scripts/install_backend.sh - Install dependencies
+
+════════════════════════════════════════════════════════════════
+
+✅ CURRENT STATUS
+────────────────────────────────────────────────────────────────
+Backend:   RUNNING ✓
+Frontend:  RUNNING ✓
+MongoDB:   RUNNING ✓
+Health:    100% ✓
+
+════════════════════════════════════════════════════════════════
+
+💡 PRO TIPS
+────────────────────────────────────────────────────────────────
+1. NO sudo needed - you're already root
+2. Use helper scripts for easy access
+3. Check logs when debugging
+4. Hot reload is enabled - code changes apply automatically
+5. Run /app/scripts/status.sh anytime to check health
+
+════════════════════════════════════════════════════════════════
+
+🆘 NEED HELP?
+────────────────────────────────────────────────────────────────
+Quick fix:     supervisorctl restart all
+View commands: /app/scripts/commands.sh
+Read docs:     cat /app/COMMANDS.md
+
+════════════════════════════════════════════════════════════════
+
+Your PCNA Agent System is running! 🎉
+Open http://localhost:3000 to see the dashboard.
+
+════════════════════════════════════════════════════════════════
