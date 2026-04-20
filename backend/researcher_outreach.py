@@ -108,7 +108,7 @@ class OutreachManager:
         Returns:
             Personalized message text
         """
-        prompt = f\"\"\"Generate a professional, trauma-informed outreach email to the following researcher.
+        prompt = f"""Generate a professional, trauma-informed outreach email to the following researcher.
 
 Researcher Profile:
 - Name: {researcher.get('name', 'Unknown')}
@@ -117,8 +117,8 @@ Researcher Profile:
 - Interests: {', '.join(researcher.get('interests', []))}
 
 Context about PCNA:
-PCNA (Prime Circular Neural Architecture) is a deterministic, prime-indexed, circular graph architecture 
-for modular compute and diagnostics. It uses 7:3 heptagram routing for 49 compute seeds, 7 meta routers, 
+PCNA (Prime Circular Neural Architecture) is a deterministic, prime-indexed, circular graph architecture
+for modular compute and diagnostics. It uses 7:3 heptagram routing for 49 compute seeds, 7 meta routers,
 and 4 sentinels for independent monitoring.
 
 Key features:
@@ -137,7 +137,7 @@ The email should:
 6. Maintain a warm, professional tone
 7. Be trauma-informed (transparent, non-manipulative)
 
-Generate the email:\"\"\"
+Generate the email:"""
         
         message = await self.llm.chat(prompt, provider="anthropic")  # Claude is best for empathetic content
         
