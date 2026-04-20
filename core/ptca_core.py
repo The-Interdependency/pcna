@@ -23,7 +23,7 @@ STEPS_PER_EVAL = 10
 def _adj_distances(n: int) -> list[int]:
     base = [1, 2, 3, 4, 5, 6, 7]
     scaled = [d for d in base if d < n]
-    gap = max(1, n // 4)
+    gap = max(1, math.ceil(n / 4))
     if gap not in scaled and gap < n:
         scaled.append(gap)
     return scaled

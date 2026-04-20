@@ -2,9 +2,8 @@
 """
 Θ (Theta) Guardian Tensor — N=29 prime-node microkernel ring.
   - Ragged circle counts per seed: circleCount[i] in [1..12]
-  - AES-256-GCM key derivation
-  - X25519 key exchange + Ed25519 signing
-  - Blueprint hash distributed across all 29 nodes
+  - Hash-based instance/key identifiers derived with hashlib
+  - SHA-256 blueprint hash sharded across all 29 nodes
   - Gate control: coherence threshold per node
   - Phi injection mirror: node_coherence broadcast → Φ (Task #72)
 

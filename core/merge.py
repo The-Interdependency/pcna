@@ -11,7 +11,6 @@ Operates on PCNAEngine instances containing PTCACore + MemoryCore + GuardianTens
 
 import time
 import numpy as np
-from .guardian import GuardianTensor
 from .ptca_core import PTCACore
 from .pcna import PCNAEngine
 

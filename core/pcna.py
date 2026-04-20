@@ -88,39 +88,39 @@ class PCNAEngine:
             path = os.path.join(_CHECKPOINT_DIR, f"{self._checkpoint_key}.npz")
             if not os.path.exists(path):
                 return
-            data = np.load(path, allow_pickle=True)
-            ring_map = {
-                "phi": self.phi,
-                "psi": self.psi,
-                "omega": self.omega,
-                "memory_l": self.memory_l,
-                "memory_s": self.memory_s,
-            }
-            for name, ring in ring_map.items():
-                t_key = f"{name}_tensor"
-                if t_key not in data:
-                    print(f"[pcna] checkpoint missing key: {t_key}")
-                    return
-                tensor = data[t_key]
-                if tensor.shape != ring.tensor.shape:
-                    print(f"[pcna] checkpoint shape mismatch on {name}: {tensor.shape} vs {ring.tensor.shape}")
-                    return
-                ring.tensor = tensor
-                v_key = f"{name}_velocities"
-                if hasattr(ring, "velocities") and v_key in data:
-                    vel = data[v_key]
-                    if vel.shape == ring.velocities.shape:
-                        ring.velocities = vel
-                if hasattr(ring, "_recompute_coherence"):
-                    ring._recompute_coherence()
-                elif hasattr(ring, "_recompute_hub_avg"):
-                    ring._recompute_hub_avg()
-            ts = float(data.get("saved_at", 0))
-            self.checkpoint_at = ts if ts else None
-            self.checkpoint_ring_means = {
-                name: round(float(ring_map[name].tensor.mean()), 4) for name in ring_map
-            }
-            print(f"[pcna] checkpoint restored: {len(ring_map)} rings, saved_at={ts}")
+            with np.load(path, allow_pickle=False) as data:
+                ring_map = {
+                    "phi": self.phi,
+                    "psi": self.psi,
+                    "omega": self.omega,
+                    "memory_l": self.memory_l,
+                    "memory_s": self.memory_s,
+                }
+                for name, ring in ring_map.items():
+                    t_key = f"{name}_tensor"
+                    if t_key not in data:
+                        print(f"[pcna] checkpoint missing key: {t_key}")
+                        return
+                    tensor = data[t_key]
+                    if tensor.shape != ring.tensor.shape:
+                        print(f"[pcna] checkpoint shape mismatch on {name}: {tensor.shape} vs {ring.tensor.shape}")
+                        return
+                    ring.tensor = tensor
+                    v_key = f"{name}_velocities"
+                    if hasattr(ring, "velocities") and v_key in data:
+                        vel = data[v_key]
+                        if vel.shape == ring.velocities.shape:
+                            ring.velocities = vel
+                    if hasattr(ring, "_recompute_coherence"):
+                        ring._recompute_coherence()
+                    elif hasattr(ring, "_recompute_hub_avg"):
+                        ring._recompute_hub_avg()
+                ts = float(data["saved_at"]) if "saved_at" in data else 0.0
+                self.checkpoint_at = ts if ts else None
+                self.checkpoint_ring_means = {
+                    name: round(float(ring_map[name].tensor.mean()), 4) for name in ring_map
+                }
+                print(f"[pcna] checkpoint restored: {len(ring_map)} rings, saved_at={ts}")
         except Exception as e:
             print(f"[pcna] checkpoint load failed (fresh start): {e}")
 

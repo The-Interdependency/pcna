@@ -191,8 +191,6 @@ class ZetaEngine:
 
         try:
 
-            from .pcna import PCNAEngine
-
             guardian = _get_default_pcna().guardian
 
             open_frac = float(guardian.gate_open.mean())

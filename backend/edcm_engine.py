@@ -14,25 +14,19 @@ EDCM Behavioral Directives (fire when metric crosses threshold):
   DISSONANCE_HALT     — DA   >= 0.80
   DRIFT_ANCHOR        — DRIFT>= 0.80
   DIVERGENCE_COMMIT   — DVG  >= 0.80
-  INTENSITY_CALM      — INT  >= 0.80
-  BALANCE_CONCISE     — TBF  >= 0.80
+  INTENSITY_CALM      — INT  <= 0.20
+  BALANCE_CONCISE     — TBF  <= 0.20
 """
+import math
 import logging
-import sys
-import os
 from typing import Dict, List, Any
 from datetime import datetime
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from core.edcm import (
     METRIC_NAMES,
-    THRESHOLDS,
     ALERT_HIGH,
     ALERT_LOW,
-    compute_metrics,
-    check_directives,
     check_alerts,
-    delta_between,
 )
 
 logger = logging.getLogger("edcm_analyzer")
@@ -101,13 +95,9 @@ class EDCMAnalyzer:
         if not seed_states:
             return {m: 0.0 for m in METRIC_NAMES}
 
-        responses = [{"content": str(s.get("health_score", 0.0))} for s in seed_states]
         health_scores = [s.get("health_score", 0.0) for s in seed_states]
         masses = [s.get("mass", 0.0) for s in seed_states]
 
-        base = compute_metrics(responses)
-
-        import math
         n = len(health_scores)
         mean_h = sum(health_scores) / max(n, 1)
         variance_h = sum((h - mean_h) ** 2 for h in health_scores) / max(n, 1)
@@ -155,9 +145,9 @@ class EDCMAnalyzer:
             fired.append("DRIFT_ANCHOR")
         if metrics.get("dvg", 0.0) >= ALERT_HIGH:
             fired.append("DIVERGENCE_COMMIT")
-        if metrics.get("int_val", 0.0) >= ALERT_HIGH:
+        if metrics.get("int_val", 0.0) <= ALERT_LOW:
             fired.append("INTENSITY_CALM")
-        if metrics.get("tbf", 0.0) >= ALERT_HIGH:
+        if metrics.get("tbf", 0.0) <= ALERT_LOW:
             fired.append("BALANCE_CONCISE")
         return fired
 
