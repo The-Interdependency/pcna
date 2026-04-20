@@ -1,6 +1,6 @@
-import pytest
+import asyncio
 from backend.edcm_engine import EDCMAnalyzer
-from core.edcm import compute_metrics, check_alerts, check_directives, ALERT_HIGH, ALERT_LOW
+from core.edcm import compute_metrics, check_alerts, check_directives
 
 
 def _make_seeds(health_scores, masses=None, roles=None):
@@ -12,6 +12,10 @@ def _make_seeds(health_scores, masses=None, roles=None):
         {"health_score": h, "mass": m, "role": r}
         for h, m, r in zip(health_scores, masses, roles)
     ]
+
+
+def _analyze(seeds):
+    return asyncio.run(EDCMAnalyzer().analyze(seeds))
 
 
 # --- core/edcm.py unit tests ---
@@ -51,52 +55,39 @@ def test_check_directives_fires():
 
 # --- EDCMAnalyzer unit tests ---
 
-@pytest.mark.asyncio
-async def test_analyze_healthy_system():
-    analyzer = EDCMAnalyzer()
-    seeds = _make_seeds([0.9, 0.95, 0.88, 0.92], masses=[1.0] * 4)
-    result = await analyzer.analyze(seeds)
+def test_analyze_healthy_system():
+    result = _analyze(_make_seeds([0.9, 0.95, 0.88, 0.92]))
     assert result["artifact_type"] == "edcm_report"
     assert set(result["metrics"].keys()) == {"cm", "da", "drift", "dvg", "int_val", "tbf"}
     assert all(0.0 <= v <= 1.0 for v in result["metrics"].values())
     assert result["insights"]
 
 
-@pytest.mark.asyncio
-async def test_analyze_directives_high_cm():
-    analyzer = EDCMAnalyzer()
-    # All mass = 0, role = compute → expected_mass = 4, total_mass = 0 → cm = 1.0
-    seeds = _make_seeds([0.9, 0.9, 0.9, 0.9], masses=[0.0] * 4)
-    result = await analyzer.analyze(seeds)
+def test_analyze_directives_high_cm():
+    # mass=0, role=compute → expected_mass=4, total_mass=0 → cm=1.0 → CONSTRAINT_REFOCUS fires
+    result = _analyze(_make_seeds([0.9, 0.9, 0.9, 0.9], masses=[0.0] * 4))
     assert "CONSTRAINT_REFOCUS" in result["directives"]
     assert result["monetization_value"] == "high"
 
 
-@pytest.mark.asyncio
-async def test_analyze_directives_low_int():
-    analyzer = EDCMAnalyzer()
-    # health_score = 0.0 → int_val = 0.0 → INTENSITY_CALM fires
-    seeds = _make_seeds([0.0, 0.0, 0.0, 0.0], masses=[1.0] * 4)
-    result = await analyzer.analyze(seeds)
+def test_analyze_directives_low_int():
+    # health_score=0.0 → int_val=0.0 <= 0.20 → INTENSITY_CALM fires
+    result = _analyze(_make_seeds([0.0, 0.0, 0.0, 0.0], masses=[1.0] * 4))
     assert "INTENSITY_CALM" in result["directives"]
 
 
-@pytest.mark.asyncio
-async def test_analyze_no_false_directives_for_normal_system():
-    analyzer = EDCMAnalyzer()
-    seeds = _make_seeds([0.8, 0.8, 0.8, 0.8], masses=[1.0] * 4)
-    result = await analyzer.analyze(seeds)
-    # cm should be ~0, da ~0, drift ~0.2, dvg 0, int_val 0.8, tbf 1.0
+def test_analyze_no_false_directives_for_normal_system():
+    # health=0.8 → cm~0, int_val=0.8, tbf~1.0 — no directives should fire
+    result = _analyze(_make_seeds([0.8, 0.8, 0.8, 0.8], masses=[1.0] * 4))
     assert "CONSTRAINT_REFOCUS" not in result["directives"]
     assert "INTENSITY_CALM" not in result["directives"]
     assert "BALANCE_CONCISE" not in result["directives"]
 
 
-@pytest.mark.asyncio
-async def test_analyze_history_accumulates():
+def test_analyze_history_accumulates():
     analyzer = EDCMAnalyzer()
     seeds = _make_seeds([0.9, 0.9])
-    await analyzer.analyze(seeds)
-    await analyzer.analyze(seeds)
+    asyncio.run(analyzer.analyze(seeds))
+    asyncio.run(analyzer.analyze(seeds))
     summary = analyzer.get_artifact_summary()
     assert summary["total_artifacts"] == 2
