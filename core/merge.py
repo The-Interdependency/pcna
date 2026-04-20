@@ -146,7 +146,7 @@ class InstanceMerge:
             "b_psi_coherence_after": round(b.psi.ring_coherence, 4),
             "a_omega_coherence_after": round(a.omega.ring_coherence, 4),
             "b_omega_coherence_after": round(b.omega.ring_coherence, 4),
-            "both_status": "diverging",
+            "both_status": "converged",
             "timestamp": time.time(),
         }
 # 118:8

@@ -50,7 +50,7 @@ def test_check_alerts_low():
 def test_check_directives_fires():
     metrics = {"cm": 0.9, "da": 0.1, "drift": 0.1, "dvg": 0.1, "int_val": 0.5, "tbf": 0.5}
     fired = check_directives(metrics)
-    assert "cm_high" in fired
+    assert "CONSTRAINT_REFOCUS" in fired
 
 
 # --- EDCMAnalyzer unit tests ---

@@ -99,9 +99,9 @@ class GuardianTensor:
         return {
             "instance_id": self.instance_id,
             "key_id": self.encryption_key_id,
-            "algorithm": "AES-256-GCM",
-            "kex": "X25519",
-            "signing": "Ed25519",
+            "identifier_derivation": "SHA-256",
+            "key_id_derivation": "SHA-256",
+            "implemented_crypto": ["hashing", "identifier-derivation"],
             "blueprint_hash": self.blueprint_hash[:16] + "...",
             "shards_distributed": N,
         }

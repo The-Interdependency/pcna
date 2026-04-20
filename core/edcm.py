@@ -18,26 +18,17 @@ from typing import Any
 
 METRIC_NAMES = ["cm", "da", "drift", "dvg", "int_val", "tbf"]
 
-THRESHOLDS = {
-    "cm": 0.85,
-    "da": 0.80,
-    "drift": 0.30,
-    "dvg": 0.25,
-    "int_val": 0.70,
-    "tbf": 0.60,
-}
-
-DIRECTIVES = {
-    "cm_high": {"metric": "cm", "condition": "above", "threshold": 0.85, "action": "coherence_lock"},
-    "da_low": {"metric": "da", "condition": "below", "threshold": 0.50, "action": "alignment_boost"},
-    "drift_high": {"metric": "drift", "condition": "above", "threshold": 0.40, "action": "drift_correction"},
-    "dvg_high": {"metric": "dvg", "condition": "above", "threshold": 0.35, "action": "divergence_dampen"},
-    "int_low": {"metric": "int_val", "condition": "below", "threshold": 0.40, "action": "integrity_restore"},
-    "tbf_low": {"metric": "tbf", "condition": "below", "threshold": 0.30, "action": "bias_recalibrate"},
-}
-
 ALERT_HIGH = 0.80
 ALERT_LOW = 0.20
+
+DIRECTIVES = {
+    "CONSTRAINT_REFOCUS": {"metric": "cm", "condition": "above", "threshold": ALERT_HIGH},
+    "DISSONANCE_HALT": {"metric": "da", "condition": "above", "threshold": ALERT_HIGH},
+    "DRIFT_ANCHOR": {"metric": "drift", "condition": "above", "threshold": ALERT_HIGH},
+    "DIVERGENCE_COMMIT": {"metric": "dvg", "condition": "above", "threshold": ALERT_HIGH},
+    "INTENSITY_CALM": {"metric": "int_val", "condition": "below", "threshold": ALERT_LOW},
+    "BALANCE_CONCISE": {"metric": "tbf", "condition": "below", "threshold": ALERT_LOW},
+}
 
 
 def compute_metrics(

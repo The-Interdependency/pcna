@@ -171,6 +171,12 @@ class ZetaEngine:
 
             from .sigma import get_sigma
 
+        except ImportError:
+
+            return change_boost, substrate_factor
+
+        try:
+
             sig = get_sigma()
 
             drained = sig.drain_content_changed_events()
