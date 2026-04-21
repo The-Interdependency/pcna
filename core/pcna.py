@@ -305,6 +305,7 @@ class PCNAEngine:
             "omega_coherence_after": round(self.omega.ring_coherence, 4),
             "theta_coherence_after": round(float(self.theta.node_coherence.mean()), 4),
             "theta_circles_after": [int(v) for v in self.theta.circle_count],
+            "theta_circles_after": [int(v) for v in self.theta.circle_count],
             "memory_l_flush_count": self.memory_l.flush_count,
             "memory_s_flush_count": self.memory_s.flush_count,
         }
