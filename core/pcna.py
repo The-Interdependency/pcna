@@ -51,7 +51,7 @@ RING_WEIGHTS = {
     "phi": 0.30,
     "psi": 0.15,
     "omega": 0.15,
-    "guardian": 0.20,
+    "theta": 0.20,
     "memory_l": 0.12,
     "memory_s": 0.08,
 }
@@ -214,11 +214,11 @@ class PCNAEngine:
         open_nodes = [n for n in g_audit if n["gate"]]
         closed_nodes = [n for n in g_audit if not n["gate"]]
         return {
-            "guardian_nodes": len(g_audit),
+            "theta_nodes": len(g_audit),
             "gates_open": len(open_nodes),
             "gates_closed": len(closed_nodes),
             "avg_circles": round(sum(n["circles"] for n in g_audit) / len(g_audit), 2),
-            "guardian_coherence": round(float(self.theta.node_coherence.mean()), 4),
+            "theta_coherence": round(float(self.theta.node_coherence.mean()), 4),
             "memory_l_hub_avg": self.memory_l.state()["avg_hub"],
         }
 
@@ -227,7 +227,7 @@ class PCNAEngine:
             "phi": seed_audit["phi_coherence"],
             "psi": seed_audit["psi_coherence"],
             "omega": seed_audit["omega_coherence"],
-            "guardian": circle_audit["guardian_coherence"],
+            "theta": circle_audit["theta_coherence"],
             "memory_l": self.memory_l.state()["avg_hub"],
             "memory_s": self.memory_s.state()["avg_hub"],
         }
@@ -265,14 +265,14 @@ class PCNAEngine:
             "signal_mean": round(float(signal.mean()), 4),
             "step1_project": {"signal_len": len(signal), "signal_mean": round(float(signal.mean()), 4)},
             "step2_inject": {"phi_n": 53, "psi_n": 53, "omega_n": 53, "memory_s_n": 17},
-            "step3_propagate": {"phi_steps": 10, "psi_steps": 8, "omega_steps": 6, "guardian_steps": 5},
+            "step3_propagate": {"phi_steps": 10, "psi_steps": 8, "omega_steps": 6, "theta_steps": 5},
             "step4_ptca_seed": seed_audit,
             "step5_pcta_circle": circle_audit,
             "step6_coherence": coherence,
             "coherence_score": coherence["weighted_coherence"],
             "winner": coherence["winner"],
             "confidence": coherence["confidence"],
-            "guardian_circles": int(self.theta.circle_count.mean()),
+            "theta_circles": int(self.theta.circle_count.mean()),
             "memory_l_state": self.memory_l.state(),
             "memory_s_state": self.memory_s.state(),
         }
@@ -304,7 +304,7 @@ class PCNAEngine:
             "psi_coherence_after": round(self.psi.ring_coherence, 4),
             "omega_coherence_after": round(self.omega.ring_coherence, 4),
             "theta_coherence_after": round(float(self.theta.node_coherence.mean()), 4),
-            "guardian_circles_after": [int(v) for v in self.theta.circle_count],
+            "theta_circles_after": [int(v) for v in self.theta.circle_count],
             "memory_l_flush_count": self.memory_l.flush_count,
             "memory_s_flush_count": self.memory_s.flush_count,
         }
