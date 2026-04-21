@@ -197,9 +197,9 @@ class ZetaEngine:
 
         try:
 
-            guardian = _get_default_pcna().guardian
+            theta = _get_default_pcna().theta
 
-            open_frac = float(guardian.gate_open.mean())
+            open_frac = float(theta.gate_open.mean())
 
             return round(0.8 + open_frac * 0.4, 4)
 
