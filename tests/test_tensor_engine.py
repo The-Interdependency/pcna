@@ -1,5 +1,5 @@
 import numpy as np
-from main.core.tensor_engine import TensorState, MarkovRecursion
+from core.tensor_engine import TensorState, MarkovRecursion
 
 
 def test_markov_recursion_mass_conserved():

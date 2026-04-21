@@ -168,8 +168,6 @@ app.add_middleware(
 
 async def initialize_seeds():
     """Initialize key seeds"""
-    global active_seeds
-    
     # Create global router
     active_seeds[0] = PCNASeed(0, SeedRole.GLOBAL)
     

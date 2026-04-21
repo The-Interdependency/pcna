@@ -19,8 +19,8 @@ from fastapi import FastAPI, BackgroundTasks
 import uvicorn
 import aiohttp
 
-from src.core.topology import PCNATopology, SeedRole
-from src.core.tensor_engine import TensorState, MarkovRecursion
+from core.topology import PCNATopology, SeedRole
+from core.tensor_engine import TensorState, MarkovRecursion
 
 logger = logging.getLogger("pcna")
 logging.basicConfig(level=logging.INFO)
@@ -156,4 +156,4 @@ async def receive_delta(delta: Dict):
 if __name__ == "__main__":
     # Useful for local development: honor PORT env var and SEED_ID/ROLE
     port = int(os.getenv("PORT", os.getenv("PORT0", "8000")))
-    uvicorn.run("src.main:app", host="0.0.0.0", port=port, log_level="info")
+    uvicorn.run("main:app", host="0.0.0.0", port=port, log_level="info")
