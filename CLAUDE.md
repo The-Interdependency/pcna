@@ -37,13 +37,13 @@ Key: `_adj_distances(n)` uses `math.ceil(n/4)` to get gap=14 for n=53 (spec-corr
 N=29 microkernel gate. Ragged circle counts per node (1–12), SHA-256 blueprint sharding, gate control via `GATE_THRESHOLD=0.45`. Not a PTCACore subclass — standalone. Neighbors hardcoded to `±1, ±7 mod 29`. Imported as `from .theta import ThetaTensor`.
 
 ### `core/sigma.py` — `SigmaRing` / `get_sigma()`
-N=41 filesystem observer wrapping PTCACore. Tracks watched file mtimes, drains change events on `content_interval` cadence. Singleton via `get_sigma()`. All callers in pcna.py and zeta.py use `try/except ImportError` — sigma is optional but present.
+N=41 filesystem observer wrapping PTCACore. Tracks watched file mtimes, drains change events on `content_interval` cadence. Singleton via `get_sigma()`. In `core/pcna.py`, sigma import and use are wrapped in a broad `except Exception: pass` (silent). In `core/zeta.py`, the import is caught with `except ImportError` (silent return) and runtime errors with `except Exception` (logged). Treat sigma as optional — callers degrade gracefully if it raises.
 
 ### `core/memory_core.py` — `MemoryCore`
 Parameterized long-term (N=19, seed=19) and short-term (N=17, seed=17) memory rings. Round-robin write, content-addressed query, `flush_to()` transfers short→long on positive reward.
 
 ### `core/pcna.py` — `PCNAEngine`
-Six-ring inference engine. Key attributes: `self.phi`, `self.psi`, `self.omega`, `self.theta`, `self.memory_l`, `self.memory_s`. `RING_WEIGHTS` dict uses keys matching `state()["rings"]` exactly: `phi, psi, omega, theta, memory_l, memory_s`. Checkpoints go in `.checkpoints/pcna_checkpoint.npz`.
+Six-ring inference engine. Key attributes: `self.phi`, `self.psi`, `self.omega`, `self.theta`, `self.memory_l`, `self.memory_s`. `RING_WEIGHTS` defines the **scored** ring set: `{phi, psi, omega, theta, memory_l, memory_s}`. `state()["rings"]` also includes `sigma` (optional observer, not scored). These two dicts are not required to be identical — only the scored rings need entries in `RING_WEIGHTS`. Checkpoints go in `.checkpoints/pcna_checkpoint.npz`.
 
 ### `core/edcm.py`
 Six-family metrics (cm, da, drift, dvg, int_val, tbf) with `ALERT_HIGH=0.80`, `ALERT_LOW=0.20`. `DIRECTIVES` dict uses canonical names: `CONSTRAINT_REFOCUS`, `DISSONANCE_HALT`, `DRIFT_ANCHOR`, `DIVERGENCE_COMMIT`, `INTENSITY_CALM`, `BALANCE_CONCISE`. `check_directives()` returns a list of fired directive names.
@@ -61,7 +61,7 @@ Derives EDCM metrics from `seed_states` dicts (require `health_score`, `mass`, `
 
 ## Key Invariants
 
-**Ring weights and ring keys must match.** `RING_WEIGHTS` in `pcna.py` and `state()["rings"]` must have identical keys. Currently: `{phi, psi, omega, theta, memory_l, memory_s}`. If you add or rename a ring, update both.
+**`RING_WEIGHTS` defines the scored ring set.** `RING_WEIGHTS` in `pcna.py` must match the keys used in `_coherence_score()` — currently `{phi, psi, omega, theta, memory_l, memory_s}`. `state()["rings"]` may include additional non-scored rings (currently `sigma`). If you add a scored ring, update `RING_WEIGHTS` and `_coherence_score`. If you add a non-scored/observer ring, add it only to `state()["rings"]`, not to `RING_WEIGHTS`.
 
 **No `guardian` key anywhere.** The ring was renamed from `guardian` to `theta`. If you see `guardian` as a dict key or attribute (outside docstring prose), it's a bug.
 
@@ -91,7 +91,7 @@ The root `main.py` uses `from core.topology import ...` — correct.
 
 ## CI
 
-GitHub Actions runs two jobs on every push:
+GitHub Actions runs a single `build` job on every push with two steps:
 
 1. **flake8** — `--select=E9,F63,F7,F82` (syntax errors, undefined names). Must pass clean.
 2. **pytest** — all `test_*.py` and `tests_*.py` in `tests/`. Must pass.
@@ -130,10 +130,10 @@ Common CI failures seen:
 
 1. Create `core/<name>.py` — implement the ring class with `tensor`, `ring_coherence`, `node_coherence`, `nudge()`, `state()` interface
 2. Add it to `PCNAEngine.__init__()` as `self.<name>`
-3. Add the weight to `RING_WEIGHTS` in `core/pcna.py`
-4. Add it to `state()["rings"]` with the same key as in `RING_WEIGHTS`
-5. Add checkpoint save/load in `save_checkpoint()` / `load_checkpoint()`
-6. Wire inject/reward as appropriate in `_inject()` and `reward()`
+3. Add it to `state()["rings"]` under the same key
+4. **If scored:** add the weight to `RING_WEIGHTS` and add the key to `_coherence_score()`'s `ring_scores` dict
+5. **If observer/optional:** skip `RING_WEIGHTS`; wrap access in `try/except` in `_inject()` and `reward()`
+6. Add checkpoint save/load in `save_checkpoint()` / `load_checkpoint()` (scored rings only)
 
 ---
 

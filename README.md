@@ -6,7 +6,7 @@ Deterministic, prime-indexed circular graph architecture for modular compute and
 
 ## Architecture
 
-PCNA organizes compute and diagnostics into **53 prime-indexed seeds** arranged on a unit-circle address space with heptagram (7-site) routing.
+PCNA organizes compute and diagnostics into **61 seeds** arranged on a unit-circle address space with heptagram (7-site) routing. The core ring tensors use N=53 (a prime) as their node count, which avoids harmonic aliasing in heptagram propagation.
 
 ### Seed Topology
 
@@ -16,7 +16,7 @@ PCNA organizes compute and diagnostics into **53 prime-indexed seeds** arranged 
 | Sentinels | 4 | Diagnostics — observe, do not compute |
 | Meta routers | 7 | Cluster aggregation |
 | Compute seeds | 49 (7×7) | Primary compute units |
-| **Total** | **53** | Prime — avoids harmonic aliasing |
+| **Total** | **61** | |
 
 Each compute seed connects to heptagram neighbors (`±3 mod 7` within its meta cluster). Routing traverses the meta-router tree; sentinels scan with a 7:2 stride pattern and publish diagnostics only.
 
@@ -29,12 +29,19 @@ The `PCNAEngine` runs a six-ring pipeline per inference call:
 | Phi | Φ | 53 | 53 | Cognitive substrate |
 | Psi | Ψ | 53 | 43 | Self-model |
 | Omega | Ω | 53 | 47 | Autonomy |
-| Theta | Θ | 29 | — | Microkernel gate |
+| Theta | Θ | 29 | 29 | Microkernel gate |
 | Memory-L | — | 19 | 19 | Long-term memory |
 | Memory-S | — | 17 | 17 | Short-term memory |
-| Sigma | Σ | 41 | 41 | Filesystem observer |
 
 **Ring weights** (coherence scoring): Φ 0.30 · Θ 0.20 · Ψ 0.15 · Ω 0.15 · Memory-L 0.12 · Memory-S 0.08
+
+Sigma (Σ) is an optional observer ring outside the scored pipeline:
+
+| Ring | Symbol | N | Seed | Role |
+|------|--------|---|------|------|
+| Sigma | Σ | 41 | 41 | Filesystem observer — injects coherence into Ψ |
+
+Sigma appears in `state()["rings"]` but is not in `RING_WEIGHTS`; it is accessed via `try/except` and degrades gracefully if unavailable.
 
 **Inference steps:**
 1. **Project** — SHA-512(text) → 53-dim normalized signal
@@ -69,7 +76,6 @@ Non-LLM real-time learning: after every assistant response, ZFAE (Zeta Function 
 ## Repository Structure
 
 ```
-pcna/
 ├── core/
 │   ├── pcna.py           # PCNAEngine — six-ring inference pipeline
 │   ├── ptca_core.py      # PTCACore — parameterized prime-ring tensor
