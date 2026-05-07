@@ -1,5 +1,9 @@
 # CLAUDE.md — PCNA Codebase Guide
 
+This file provides guidance to Claude Code and other AI assistants working in this repository.
+
+---
+
 ## Project Overview
 
 PCNA (Prime Circular Neural Architecture) is a deterministic, prime-indexed circular graph system for modular compute and real-time diagnostics. It has two distinct layers:
@@ -7,7 +11,7 @@ PCNA (Prime Circular Neural Architecture) is a deterministic, prime-indexed circ
 - **core/** — the inference engine: six rings of prime-indexed tensor nodes running heptagram propagation, coherence scoring, and EDCM diagnostics
 - **backend/** — a FastAPI server that hosts seeds, integrates an LLM orchestrator, and exposes REST/WebSocket APIs
 
-The canonical upstream is `The-Interdependency/a0`. Features are ported from there and adapted. Development happens on `claude/update-from-interdependency-a0-*` branches; PRs go to `main`.
+The canonical upstream is `The-Interdependency/a0`. Features are ported from there and adapted. Development happens on feature branches; PRs go to `main`.
 
 ---
 
@@ -31,7 +35,7 @@ requirements.txt
 ### `core/ptca_core.py` — `PTCACore`
 Base class for all prime-ring tensors. Tensor shape: `[N, DIMS=4, PHASES=7, HEPT_SITES=7]`. Heptagram propagation via Euler steps (DT=0.01). Coherence = `1 - |ring - hub|_mean`. Used by Φ, Ψ, Ω, and Σ.
 
-Key: `_adj_distances(n)` uses `math.ceil(n/4)` to get gap=14 for n=53 (spec-correct). Keep `import math` — it's used here.
+Key: `_adj_distances(n)` uses `math.ceil(n/4)` to get gap=14 for n=53 (spec-correct). Keep `import math` — it is used here.
 
 ### `core/theta.py` — `ThetaTensor`
 N=29 microkernel gate. Ragged circle counts per node (1–12), SHA-256 blueprint sharding, gate control via `GATE_THRESHOLD=0.45`. Not a PTCACore subclass — standalone. Neighbors hardcoded to `±1, ±7 mod 29`. Imported as `from .theta import ThetaTensor`.
@@ -61,9 +65,9 @@ Derives EDCM metrics from `seed_states` dicts (require `health_score`, `mass`, `
 
 ## Key Invariants
 
-**`RING_WEIGHTS` defines the scored ring set.** `RING_WEIGHTS` in `pcna.py` must match the keys used in `_coherence_score()` — currently `{phi, psi, omega, theta, memory_l, memory_s}`. `state()["rings"]` may include additional non-scored rings (currently `sigma`). If you add a scored ring, update `RING_WEIGHTS` and `_coherence_score`. If you add a non-scored/observer ring, add it only to `state()["rings"]`, not to `RING_WEIGHTS`.
+**`RING_WEIGHTS` defines the scored ring set.** `RING_WEIGHTS` in `pcna.py` must match the keys used in `_coherence_score()` — currently `{phi, psi, omega, theta, memory_l, memory_s}`. `state()["rings"]` may include additional non-scored rings (currently `sigma`). If you add a scored ring, update both `RING_WEIGHTS` and `_coherence_score`. If you add a non-scored/observer ring, add it only to `state()["rings"]`.
 
-**No `guardian` key anywhere.** The ring was renamed from `guardian` to `theta`. If you see `guardian` as a dict key or attribute (outside docstring prose), it's a bug.
+**No `guardian` key anywhere.** The ring was renamed from `guardian` to `theta`. If you see `guardian` as a dict key or attribute (outside docstring prose), it is a bug.
 
 **EDCM directive names are canonical.** Always `CONSTRAINT_REFOCUS`, `DISSONANCE_HALT`, `DRIFT_ANCHOR`, `DIVERGENCE_COMMIT`, `INTENSITY_CALM`, `BALANCE_CONCISE`. No internal abbreviations.
 
@@ -71,7 +75,7 @@ Derives EDCM metrics from `seed_states` dicts (require `health_score`, `mass`, `
 
 **No `pytest-asyncio`.** Tests use `asyncio.run()` directly. Do not add `@pytest.mark.asyncio`.
 
-**No `sys.path.insert` in source files.** `conftest.py` handles the path. Don't add it to individual modules.
+**No `sys.path.insert` in source files.** `conftest.py` handles the path. Do not add it to individual modules.
 
 ---
 
@@ -84,7 +88,7 @@ from backend.edcm_engine import EDCMAnalyzer
 from core.pcna import PCNAEngine
 ```
 
-The root `main.py` uses `from core.topology import ...` — correct.
+The root `main.py` uses `from core.topology import ...` — correct.  
 `core/main.py` uses `from src.core.*` — broken, do not use.
 
 ---
@@ -96,11 +100,30 @@ GitHub Actions runs a single `build` job on every push with two steps:
 1. **flake8** — `--select=E9,F63,F7,F82` (syntax errors, undefined names). Must pass clean.
 2. **pytest** — all `test_*.py` and `tests_*.py` in `tests/`. Must pass.
 
-Common CI failures seen:
+Common CI failures:
 - Backslash-escaped triple quotes in f-strings → E999 SyntaxError
 - Unused `global` declarations → F824
 - Wrong import paths (e.g. `from src.core.*`) → ModuleNotFoundError
 - Missing `asyncio.run()` / leftover `@pytest.mark.asyncio` decorator
+
+---
+
+## Adding a New Ring
+
+1. Create `core/<name>.py` — implement the ring class with `tensor`, `ring_coherence`, `node_coherence`, `nudge()`, `state()` interface
+2. Add it to `PCNAEngine.__init__()` as `self.<name>`
+3. Add it to `state()["rings"]` under the same key
+4. **If scored:** add weight to `RING_WEIGHTS` and key to `_coherence_score()`'s `ring_scores` dict
+5. **If observer/optional:** skip `RING_WEIGHTS`; wrap access in `try/except` in `_inject()` and `reward()`
+6. Add checkpoint save/load in `save_checkpoint()` / `load_checkpoint()` (scored rings only)
+
+---
+
+## Working with EDCM
+
+`core/edcm.py` computes metrics from response text (content length, variance, context overlap). `backend/edcm_engine.py` computes metrics from seed state dicts (health scores, masses, roles). These are two separate derivation paths feeding the same six-family schema.
+
+To add a new directive: add it to `DIRECTIVES` in `core/edcm.py`, add the corresponding firing condition to `EDCMAnalyzer._fire_directives()` in `backend/edcm_engine.py`, and add a test in `tests/test_edcm_engine.py`.
 
 ---
 
@@ -121,30 +144,20 @@ Common CI failures seen:
 - `core/helix_vis.py`: saves to hardcoded `pcna_helix.gif`; no config
 - `core/sigma.py`: `structural_interval` is stored but never acted on
 - `core/merge.py`: `fork()` time-seeds its RNG — rapid calls may collide
-- `backend/server.py`: MongoDB connection failure is not handled gracefully; seed roles are hardcoded in initialization (not topology-driven)
+- `backend/server.py`: MongoDB connection failure is not handled gracefully; seed roles are hardcoded
 - `requirements.txt`: missing `motor`, `python-dotenv`, `emergentintegrations`, `scipy`, `matplotlib`
-
----
-
-## Adding a New Ring
-
-1. Create `core/<name>.py` — implement the ring class with `tensor`, `ring_coherence`, `node_coherence`, `nudge()`, `state()` interface
-2. Add it to `PCNAEngine.__init__()` as `self.<name>`
-3. Add it to `state()["rings"]` under the same key
-4. **If scored:** add the weight to `RING_WEIGHTS` and add the key to `_coherence_score()`'s `ring_scores` dict
-5. **If observer/optional:** skip `RING_WEIGHTS`; wrap access in `try/except` in `_inject()` and `reward()`
-6. Add checkpoint save/load in `save_checkpoint()` / `load_checkpoint()` (scored rings only)
-
----
-
-## Working with EDCM
-
-`core/edcm.py` computes metrics from response text (content length, variance, context overlap). `backend/edcm_engine.py` computes metrics from seed state dicts (health scores, masses, roles). These are two separate derivation paths feeding the same six-family schema.
-
-To add a new directive: add it to `DIRECTIVES` in `core/edcm.py`, add the corresponding firing condition to `EDCMAnalyzer._fire_directives()` in `backend/edcm_engine.py`, and add a test in `tests/test_edcm_engine.py`.
 
 ---
 
 ## Frontend
 
 React app in `frontend/`. Components: `TopologyVisualization`, `SystemHealthDashboard`, `EDCMArtifacts`, `LLMInterface`, `SMSConsole`. Not tested in CI. Backend served separately.
+
+---
+
+## Git Workflow
+
+- Main branch: `main`
+- Feature branches: `feat/<description>`, `fix/<description>`, `claude/update-from-interdependency-a0-*`
+- Author: Erin Patrick Spencer
+- License: Apache 2.0
