@@ -158,8 +158,9 @@ React app in `frontend/`. Components: `TopologyVisualization`, `SystemHealthDash
 ## Git Workflow
 
 - Main branch: `main`
-- Feature branches: `feat/<description>`, `fix/<description>`, `claude/update-from-interdependency-a0-*`
-- Author: Erin Patrick Spencer
+- Feature branches: `feat/<description>`, `fix/<description>`, `docs/<description>`, `claude/update-from-interdependency-a0-*`
+- Commit style: Conventional Commits (`feat(core):`, `fix(pcna):`, etc.)
+- Author: Erin Patrick Spencer (wayseer@interdependentway.org)
 - License: Apache 2.0
 
 ## Agent module-build doctrine
