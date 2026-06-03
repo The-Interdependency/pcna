@@ -32,7 +32,7 @@ reward(winner, outcome) → nudge all three PTCA cores + guardian + memory flush
 #   summary: Six-ring PCNA inference engine (phi/psi/omega/theta/memory_l/memory_s) running project->inject->propagate->ptca-seed->pcta-circle->coherence, with RING_WEIGHTS scoring and numpy checkpointing.
 #   owner: Erin Spencer
 #   public_surface: PCNAEngine, RING_WEIGHTS, WINNER_RINGS
-#   internal_surface: _tensor_to_b64, _b64_to_tensor, _CHECKPOINT_DIR, PCNAEngine._project/_inject/_propagate/_ptca_seed_audit/_pcta_circle_audit/_coherence_score
+#   internal_surface: _tensor_to_b64, _b64_to_tensor, _CHECKPOINT_DIR, PCNAEngine._project, PCNAEngine._inject, PCNAEngine._propagate, PCNAEngine._ptca_seed_audit, PCNAEngine._pcta_circle_audit, PCNAEngine._coherence_score
 #   auth_boundary: none
 #   storage_boundary: write
 #   network_boundary: none

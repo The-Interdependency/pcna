@@ -8,7 +8,7 @@
 #   internal_surface: none
 #   auth_boundary: none
 #   storage_boundary: none
-#   network_boundary: hmmm
+#   network_boundary: none
 #   user_data_boundary: none
 #   admin_only: false
 #   tests: hmmm

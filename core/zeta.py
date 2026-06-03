@@ -41,7 +41,7 @@ Example: global=3, /system=5 means system-root paths are observed at full depth.
 #   summary: ZFAE evaluator that scores each assistant response via EDCM (no LLM) and nudges PCNAEngine.phi, with per-directory resolution control and a module-level singleton.
 #   owner: Erin Spencer
 #   public_surface: ZetaEngine, _zeta_engine
-#   internal_surface: _get_default_pcna, ZetaEngine._coherence_from_metrics/_sigma_nudge_factors/_theta_gate_factor
+#   internal_surface: _get_default_pcna, ZetaEngine._coherence_from_metrics, ZetaEngine._sigma_nudge_factors, ZetaEngine._theta_gate_factor
 #   auth_boundary: none
 #   storage_boundary: none
 #   network_boundary: none

@@ -11,7 +11,7 @@ Integrates: PCNA topology, LLM abstraction, self-optimization, SMS, MongoDB
 #   owner: Erin Spencer
 #   public_surface: app, PCNASeed, health, get_topology, get_seeds, system_health, llm_chat, edcm_analyze, get_edcm_artifacts, sms_command, websocket_endpoint
 #   internal_surface: lifespan, initialize_seeds, tick_loop, optimization_loop, sms_checkin_loop, broadcast_state, get_system_health
-#   auth_boundary: hmmm
+#   auth_boundary: none
 #   storage_boundary: write
 #   network_boundary: external
 #   user_data_boundary: read

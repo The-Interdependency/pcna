@@ -13,7 +13,7 @@ Supports mock mode for development, real Twilio integration for production
 #   internal_surface: SMSService._send
 #   auth_boundary: none
 #   storage_boundary: none
-#   network_boundary: hmmm
+#   network_boundary: none
 #   user_data_boundary: read
 #   admin_only: false
 #   tests: hmmm

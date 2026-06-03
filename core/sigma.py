@@ -15,7 +15,7 @@ N=41, seed=41 — observer substrate
 #   summary: N=41 filesystem observer ring wrapping PTCACore; tracks watched file mtimes and drains content-changed events on a content_interval cadence, injecting coherence into Psi.
 #   owner: Erin Spencer
 #   public_surface: SigmaRing, get_sigma, N, SEED
-#   internal_surface: _sigma singleton, SigmaRing._core/_watched/_pending/_last_check
+#   internal_surface: _sigma, SigmaRing._core, SigmaRing._watched, SigmaRing._pending, SigmaRing._last_check
 #   auth_boundary: none
 #   storage_boundary: read
 #   network_boundary: none
