@@ -2,6 +2,28 @@
 SMS Service for PCNA System Check-ins
 Supports mock mode for development, real Twilio integration for production
 """
+
+# === MODULE_BUILD ===
+# id: pcna_backend_sms_service
+#   module_name: sms_service
+#   module_kind: adapter
+#   summary: SMSService for system check-ins and alerts; runs in mock mode (logs to console) with Twilio integration scaffolded but commented out pending an API key.
+#   owner: Erin Spencer
+#   public_surface: SMSService
+#   internal_surface: SMSService._send
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: hmmm
+#   user_data_boundary: read
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: none
+#   since: 2026-06-02
+#   unresolved: Twilio integration commented out; mock mode only (Known Stubs)
+# === END MODULE_BUILD ===
+
 import logging
 from typing import Dict, Optional
 from datetime import datetime

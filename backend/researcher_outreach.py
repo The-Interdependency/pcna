@@ -3,6 +3,27 @@ Researcher Outreach Module
 Manages outreach to AI/ML researchers interested in PCNA and related topics
 """
 
+# === MODULE_BUILD ===
+# id: pcna_backend_researcher_outreach
+#   module_name: researcher_outreach
+#   module_kind: service
+#   summary: OutreachManager maintains a MongoDB researcher database and LLM-generated personalized outreach messages with tracking/follow-up and campaign analytics; actual send_outreach() is a stub.
+#   owner: Erin Spencer
+#   public_surface: OutreachManager, ResearcherProfile
+#   internal_surface: none
+#   auth_boundary: none
+#   storage_boundary: write
+#   network_boundary: external
+#   user_data_boundary: write
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: pcna_backend_llm_abstraction
+#   since: 2026-06-02
+#   unresolved: send_outreach() is a stub; message generation works (Known Stubs)
+# === END MODULE_BUILD ===
+
 import logging
 from typing import Dict, List, Optional
 from datetime import datetime

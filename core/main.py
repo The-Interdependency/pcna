@@ -10,6 +10,28 @@ Environment configuration:
 The networking layer here is a minimal placeholder using aiohttp. In a real
 deployment you'd wire actual DNS/ports mapping per-seed.
 """
+
+# === MODULE_BUILD ===
+# id: pcna_core_main
+#   module_name: main
+#   module_kind: service
+#   summary: Minimal FastAPI seed-runner process (compute/meta/sentinel/global) exposing health/topology/receive_delta routes with an aiohttp networking placeholder.
+#   owner: Erin Spencer
+#   public_surface: app, PCNASeed, health, topology, receive_delta, startup, shutdown, tick_loop
+#   internal_surface: seed_instance
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: external
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: do not launch this process; use root-level main.py seed runner instead
+#   requires: pcna_topology, pcna_tensor_engine
+#   since: 2026-06-02
+#   unresolved: BROKEN alt entry point — imports from non-existent src.core.* (do not use per CLAUDE.md)
+# === END MODULE_BUILD ===
+
 import os
 import asyncio
 from typing import Dict, Any, Optional

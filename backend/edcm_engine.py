@@ -17,6 +17,28 @@ EDCM Behavioral Directives (fire when metric crosses threshold):
   INTENSITY_CALM      — INT  <= 0.20
   BALANCE_CONCISE     — TBF  <= 0.20
 """
+
+# === MODULE_BUILD ===
+# id: pcna_backend_edcm_engine
+#   module_name: edcm_engine
+#   module_kind: engine
+#   summary: EDCMAnalyzer derives six-family EDCM metrics from seed_states dicts (health_score, mass, role), fires behavioral directives, and generates insights/recommendations plus a monetization_value.
+#   owner: Erin Spencer
+#   public_surface: EDCMAnalyzer
+#   internal_surface: _fire_directives, _generate_insights, _generate_recommendations
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: tests/test_edcm_engine.py
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: pcna_edcm
+#   since: 2026-06-02
+#   unresolved: none
+# === END MODULE_BUILD ===
+
 import math
 import logging
 from typing import Dict, List, Any

@@ -2,6 +2,28 @@
 Tensor engine primitives: TensorState, simple spectral descriptor, and
 a MarkovRecursion updater that enforces (approximate) mass conservation.
 """
+
+# === MODULE_BUILD ===
+# id: pcna_tensor_engine
+#   module_name: tensor_engine
+#   module_kind: engine
+#   summary: Tensor engine primitives — TensorState (E[a,t,m,c]) with spectral descriptor Z = Sum E.e^(i*theta), and a MarkovRecursion updater that enforces approximate mass conservation.
+#   owner: Erin Spencer
+#   public_surface: TensorState, MarkovRecursion
+#   internal_surface: none
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: tests/test_tensor_engine.py
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: none
+#   since: 2026-06-02
+#   unresolved: none
+# === END MODULE_BUILD ===
+
 from dataclasses import dataclass
 from typing import Tuple
 import numpy as np

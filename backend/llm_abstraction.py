@@ -2,6 +2,28 @@
 LLM Orchestrator - Hot-swappable multi-provider LLM abstraction
 Supports: OpenAI, Anthropic, Google Gemini with automatic fallback
 """
+
+# === MODULE_BUILD ===
+# id: pcna_backend_llm_abstraction
+#   module_name: llm_abstraction
+#   module_kind: adapter
+#   summary: Hot-swappable multi-provider LLM orchestrator (OpenAI/Anthropic/Gemini) with per-provider failure tracking and automatic fallback, built on emergentintegrations.
+#   owner: Erin Spencer
+#   public_surface: LLMOrchestrator, LLMProvider
+#   internal_surface: LLMOrchestrator._initialize_providers, _try_provider
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: external
+#   user_data_boundary: read
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: none
+#   since: 2026-06-02
+#   unresolved: none
+# === END MODULE_BUILD ===
+
 import asyncio
 import logging
 from typing import Optional, Dict, Any, List

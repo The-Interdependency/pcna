@@ -2,6 +2,28 @@
 Self-Optimization Engine for PCNA
 Monitors system health and automatically adjusts resources
 """
+
+# === MODULE_BUILD ===
+# id: pcna_backend_optimization_engine
+#   module_name: optimization_engine
+#   module_kind: engine
+#   summary: SelfOptimizer monitors PCNA system health and recommends/takes seed-allocation, degradation-detection, reallocation, and anomaly-detection actions over an in-memory history.
+#   owner: Erin Spencer
+#   public_surface: SelfOptimizer
+#   internal_surface: none
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: none
+#   since: 2026-06-02
+#   unresolved: none
+# === END MODULE_BUILD ===
+
 import logging
 from typing import Dict, List, Any
 from datetime import datetime

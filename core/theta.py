@@ -10,6 +10,27 @@ Architecturally unique — not parameterized like PTCACore.
 Self-declares identity in state() as symbol="Θ", name="theta".
 """
 
+# === MODULE_BUILD ===
+# id: pcna_theta
+#   module_name: theta
+#   module_kind: engine
+#   summary: N=29 standalone microkernel gate ring with ragged per-node circle counts, SHA-256 blueprint sharding, and gate control via GATE_THRESHOLD=0.45.
+#   owner: Erin Spencer
+#   public_surface: ThetaTensor, GATE_THRESHOLD, N
+#   internal_surface: _gen_instance_id, _derive_key_id, _compute_blueprint_hash, _shard_blueprint, ThetaTensor._recompute_coherence
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: none
+#   since: 2026-06-02
+#   unresolved: none
+# === END MODULE_BUILD ===
+
 import hashlib
 import os
 import time

@@ -13,6 +13,27 @@ All metrics produce values in [0, 1].
 Alert thresholds: HIGH >= 0.80, LOW <= 0.20.
 """
 
+# === MODULE_BUILD ===
+# id: pcna_edcm
+#   module_name: edcm
+#   module_kind: engine
+#   summary: Six-family EDCM coherence metrics (cm, da, drift, dvg, int_val, tbf) computed from response text, with alert thresholds and corrective directive firing.
+#   owner: Erin Spencer
+#   public_surface: compute_metrics, check_directives, check_alerts, delta_between, METRIC_NAMES, ALERT_HIGH, ALERT_LOW, DIRECTIVES
+#   internal_surface: none
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: tests/test_edcm_engine.py
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: none
+#   since: 2026-06-02
+#   unresolved: none
+# === END MODULE_BUILD ===
+
 import math
 from typing import Any
 

@@ -2,6 +2,28 @@
 FastAPI Backend for PCNA Agent System
 Integrates: PCNA topology, LLM abstraction, self-optimization, SMS, MongoDB
 """
+
+# === MODULE_BUILD ===
+# id: pcna_backend_server
+#   module_name: server
+#   module_kind: service
+#   summary: FastAPI backend (port 8001) hosting PCNA seeds and serving /api/* REST routes (health, topology, seeds, system-health, llm/chat, edcm/*, sms/command) plus a /ws WebSocket, integrating MongoDB, LLM, optimizer, SMS, and EDCM.
+#   owner: Erin Spencer
+#   public_surface: app, PCNASeed, health, get_topology, get_seeds, system_health, llm_chat, edcm_analyze, get_edcm_artifacts, sms_command, websocket_endpoint
+#   internal_surface: lifespan, initialize_seeds, tick_loop, optimization_loop, sms_checkin_loop, broadcast_state, get_system_health
+#   auth_boundary: hmmm
+#   storage_boundary: write
+#   network_boundary: external
+#   user_data_boundary: read
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: do not launch the uvicorn server process
+#   requires: pcna_topology, pcna_tensor_engine, pcna_backend_llm_abstraction, pcna_backend_optimization_engine, pcna_backend_sms_service, pcna_backend_edcm_engine
+#   since: 2026-06-02
+#   unresolved: MongoDB connection failure is not handled gracefully; seed roles are hardcoded (Known Issues)
+# === END MODULE_BUILD ===
+
 import os
 import asyncio
 import logging

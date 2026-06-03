@@ -4,6 +4,27 @@ Visualizes the spectral state of a 7-seed Meta Router.
 Plots the complex descriptor Z = Σ E · e^(iθ)
 """
 
+# === MODULE_BUILD ===
+# id: pcna_helix_vis
+#   module_name: helix_vis
+#   module_kind: instrument
+#   summary: Visualizes the spectral state of a 7-seed Meta Router by plotting the complex descriptor Z over a simulated trajectory and saving an animation.
+#   owner: Erin Spencer
+#   public_surface: generate_helix_data, visualize
+#   internal_surface: none
+#   auth_boundary: none
+#   storage_boundary: write
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: none
+#   since: 2026-06-02
+#   unresolved: saves to hardcoded pcna_helix.gif with no config (Known Issues)
+# === END MODULE_BUILD ===
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
