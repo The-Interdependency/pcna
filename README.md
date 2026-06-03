@@ -4,6 +4,24 @@ Deterministic, prime-indexed circular graph architecture for modular compute and
 
 ---
 
+## Role in the prime-tensor stack
+
+In the org-wide canonical map (`The-Interdependency/interdependent-lib :
+docs/prime-tensor-stack.md`, the single source of truth — it moves no
+theorem/proof status between repos), PCNA is **stack layer 1**: it creates the
+prime-indexed tensors and owns **back-propagation** (the only differentiable
+layer), composing **7 tensors per circle** to produce trained **weights**.
+Layer 2 is PCTA (circles → seeds), layer 3 is PTCA (seeds → core), and
+**inference is ZFAE's layer** (runtime in `a0`; in-repo port `core/zeta.py`).
+PCEA is the orthogonal guardian (seals weights/state), not a layer.
+
+> **hmmm:** the "Six-Ring Inference Engine" described below is what this repo's
+> code does **today**; per the canon, that inference role belongs to ZFAE, not
+> to PCNA's canonical layer-1 boundary. The tension is flagged, not resolved —
+> the engine description below remains accurate for this repo.
+
+---
+
 ## Architecture
 
 PCNA organizes compute and diagnostics into **61 seeds** arranged on a unit-circle address space with heptagram (7-site) routing. The core ring tensors use N=53 (a prime) as their node count, which avoids harmonic aliasing in heptagram propagation.

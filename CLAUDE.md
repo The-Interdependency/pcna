@@ -22,6 +22,36 @@ The canonical upstream is `The-Interdependency/a0`. Features are ported from the
 
 ---
 
+## Role in the prime-tensor stack
+
+The org-wide canonical role-and-boundary map for the prime-tensor compute family
+is `The-Interdependency/interdependent-lib : docs/prime-tensor-stack.md` (the
+single source of truth; it moves no theorem/proof/empirical status between repos).
+In that map, PCNA's **canonical architectural role** is **layer 1**: it creates
+the prime-indexed tensors and owns **back-propagation** — the only differentiable
+layer — composing **7 tensors per circle** (the circle is itself a tensor) and
+producing trained **weights**.
+
+| Layer | Member | Role (per canon) |
+|-------|--------|------------------|
+| **1 (PCNA)** | `pcna` | Tensor/circle creation + back-propagation → **weights** (7 tensors/circle) |
+| 2 | `pcta` *(repo forthcoming)* | Circles → seeds → structural motion |
+| 3 | `ptca` / `ptca-lib` | Seeds → core → structural motion |
+| Inference | `zfae` *(runtime in `a0`)* | Infers from PCNA weights + PCTA/PTCA motion |
+| Guardian | `pcea` | Orthogonal — seals weights/state (not a layer) |
+
+> **hmmm — inference-boundary tension.** This repo's code currently describes
+> PCNA as a "six-ring inference engine" (Φ/Ψ/Ω/Θ/Memory, 61 seeds, FastAPI
+> backend), i.e. it performs inference today. In the canonical stack, **inference
+> is ZFAE's layer** (ZFAE runtime lives in `a0`; the in-repo port is
+> `core/zeta.py`). So the in-repo "inference engine" framing accurately describes
+> the **current runtime**, not the canonical layer-1 boundary above. This
+> tension is flagged as a `hmmm` and is **not** resolved here — the descriptions
+> below of what the code actually does remain accurate and authoritative for this
+> repo.
+
+---
+
 ## Repository Layout
 
 ```
