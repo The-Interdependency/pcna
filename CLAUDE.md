@@ -6,10 +6,17 @@ This file provides guidance to Claude Code and other AI assistants working in th
 
 ## Project Overview
 
-PCNA (Prime Circular Neural Architecture) is a deterministic, prime-indexed circular graph system for modular compute and real-time diagnostics. It has two distinct layers:
+PCNA (Prime Circular Neural Architecture) is a deterministic, prime-indexed circular graph system for modular compute and real-time diagnostics. Compute and diagnostics are organized into 61 seeds on a unit-circle address space with heptagram (7-site) routing; core ring tensors use N=53 (prime) to avoid harmonic aliasing.
 
-- **core/** — the inference engine: six rings of prime-indexed tensor nodes running heptagram propagation, coherence scoring, and EDCM diagnostics
-- **backend/** — a FastAPI server that hosts seeds, integrates an LLM orchestrator, and exposes REST/WebSocket APIs
+It has two distinct layers plus a UI:
+
+- **core/** — the inference engine: six rings of prime-indexed tensor nodes running heptagram propagation, coherence scoring, and EDCM diagnostics. Pure Python + NumPy; no FastAPI, no DB.
+- **backend/** — a FastAPI server that hosts seeds, integrates an LLM orchestrator, and exposes REST/WebSocket APIs (MongoDB via Motor, optional Twilio/Moltbook integrations).
+- **frontend/** — a React (CRA) dashboard.
+
+**Stack:** Python 3.10 (CI target), NumPy / FastAPI / Uvicorn / Pydantic / aiohttp; React 18 + Tailwind on the frontend.
+**License:** dual-license in progress — see `LICENSE` (interim notice) and `LICENSE-COMMERCIAL.md`. Source headers reference Apache 2.0.
+**Version:** frontend `package.json` is `0.1.0`; the Python side is unversioned (no `pyproject.toml`/`setup.py`).
 
 The canonical upstream is `The-Interdependency/a0`. Features are ported from there and adapted. Development happens on feature branches; PRs go to `main`.
 
@@ -18,15 +25,28 @@ The canonical upstream is `The-Interdependency/a0`. Features are ported from the
 ## Repository Layout
 
 ```
-core/           Engine modules (no FastAPI, no DB)
-backend/        Server, LLM, optimization, SMS, Moltbook, outreach
-frontend/src/   React dashboard (5 components)
-tests/          pytest — no pytest-asyncio; use asyncio.run() for async tests
-schemas/        JSON schemas
-main.py         Seed runner entry point
-conftest.py     sys.path insert — keeps pytest imports working
-requirements.txt
+core/             Engine modules (no FastAPI, no DB)
+backend/          Server, LLM, optimization, SMS, Moltbook, outreach + own requirements.txt
+frontend/src/     React dashboard (5 components)
+tests/            pytest — no pytest-asyncio; use asyncio.run() for async tests
+schemas/          JSON schemas + pcna_ds.md
+scripts/          Operational shell scripts (start/status/install/commands)
+.agents/skills/   Agent module-build doctrine (see meta-module-build/SKILL.md)
+.github/workflows/ python-app.yml (CI)
+.devcontainer/    Dev container config
+main.py           FastAPI seed-runner entry point (SEED_ID/ROLE/PORT env vars)
+core/main.py      BROKEN alt entry — imports from non-existent `src.core.*`; do not use
+pcna              Bash CLI wrapping supervisorctl (status/health/restart/logs)
+run_command.sh    PATH-fixing command wrapper
+proof_check.py    Standalone invariant/proof check script
+conftest.py       sys.path insert — keeps pytest imports working
+requirements.txt  Core/runtime deps (NumPy, FastAPI, Uvicorn, aiohttp, Pydantic)
 ```
+
+Many top-level `*.md`/`*.txt` files (`README`, `PROJECT_README`, `QUICK_START`,
+`HOW_TO_USE`, `COMMANDS`, `*_FIX.md`, `SYSTEM_STATUS`) are operator/onboarding
+docs, several oriented at a supervisor-managed deployment. Prefer this file and
+`README.md` as sources of truth.
 
 ---
 
@@ -93,9 +113,72 @@ The root `main.py` uses `from core.topology import ...` — correct.
 
 ---
 
+## Build / Test / Lint / Run
+
+All Python commands run from the repo root. `conftest.py` sets the import path, so no install step is needed for tests.
+
+```bash
+# Install runtime deps (core) — required: NumPy is imported by core/ and tests
+pip install -r requirements.txt
+# Backend-only extras (Mongo, dotenv, structlog, multipart, etc.)
+pip install -r backend/requirements.txt
+
+# Run the full test suite (matches CI)
+pytest
+# Single file / test
+pytest tests/test_edcm_engine.py
+pytest tests/test_edcm_engine.py::<test_name>
+
+# Lint exactly as CI does
+flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics   # must pass clean (build-blocking)
+flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics  # advisory only
+
+# Standalone invariant check
+python proof_check.py
+
+# Run the root seed runner (main.py) — a minimal compute/topology process.
+# It serves ONLY /health, /topology, /receive_delta (NO /api/* routes) and
+# defaults to PORT 8000 (env precedence: PORT, then PORT0, then 8000).
+python main.py                              # default port 8000; honors SEED_ID, ROLE, PORT
+SEED_ID=3 ROLE=meta PORT=8000 python main.py
+# or via uvicorn (point at whatever port you want)
+uvicorn main:app --host 0.0.0.0 --port 8000
+
+# Run the backend API server (backend/server.py) — this is the one the
+# dashboard talks to; it serves the /api/* routes (/api/health, /api/topology,
+# /api/seeds, /api/system-health, /api/llm/chat, /api/edcm/*, /api/sms/command)
+# and the /ws WebSocket. It listens on port 8001 (hardcoded in its
+# uvicorn.run(...) call), matching the frontend proxy below.
+cd backend && uvicorn server:app --host 0.0.0.0 --port 8001
+# or run the module directly (its __main__ block binds 0.0.0.0:8001):
+python backend/server.py
+
+# Frontend (from frontend/)
+cd frontend && npm install && npm start     # CRA dev server; proxies to :8001
+npm run build                               # production build
+```
+
+> The root `main.py` seed runner and `backend/server.py` are two different
+> servers. The React dashboard's `/api/*` calls are served by
+> `backend/server.py` on :8001 (the `"proxy": "http://localhost:8001"` target
+> in `frontend/package.json`), **not** by `main.py`. The seed runner does not
+> expose any `/api/*` route. If you point the dashboard at the seed runner you
+> will get 404s for every `/api/*` request.
+
+There is no Makefile, no `pyproject.toml`, and no Python lockfile. `pytest` has
+no config file — it auto-discovers `test_*.py` and `tests_*.py` under `tests/`.
+The `pcna` bash CLI and `scripts/*.sh` target a supervisor-managed deployment
+(`supervisorctl`, `/api/system-health`), not the local dev loop above.
+
+> Sandbox note: if `pytest` reports `ModuleNotFoundError: No module named 'numpy'`,
+> dependencies are not installed — run the `pip install` steps first. CI installs
+> them automatically.
+
+---
+
 ## CI
 
-GitHub Actions runs a single `build` job on every push with two steps:
+GitHub Actions (`.github/workflows/python-app.yml`) runs a single `build` job on Python 3.10 for every push and PR to `main`, with two steps:
 
 1. **flake8** — `--select=E9,F63,F7,F82` (syntax errors, undefined names). Must pass clean.
 2. **pytest** — all `test_*.py` and `tests_*.py` in `tests/`. Must pass.
@@ -161,7 +244,7 @@ React app in `frontend/`. Components: `TopologyVisualization`, `SystemHealthDash
 - Feature branches: `feat/<description>`, `fix/<description>`, `docs/<description>`, `claude/update-from-interdependency-a0-*`
 - Commit style: Conventional Commits (`feat(core):`, `fix(pcna):`, etc.)
 - Author: Erin Patrick Spencer (wayseer@interdependentway.org)
-- License: Apache 2.0
+- License: dual-license in progress (`LICENSE` interim notice + `LICENSE-COMMERCIAL.md`); source headers reference Apache 2.0
 
 ## Agent module-build doctrine
 
