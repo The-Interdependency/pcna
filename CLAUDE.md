@@ -136,16 +136,34 @@ flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statist
 # Standalone invariant check
 python proof_check.py
 
-# Run the FastAPI seed runner (root main.py)
-python main.py                              # honors PORT (default below), SEED_ID, ROLE
-SEED_ID=3 ROLE=meta PORT=8001 python main.py
-# or via uvicorn
-uvicorn main:app --host 0.0.0.0 --port 8001
+# Run the root seed runner (main.py) — a minimal compute/topology process.
+# It serves ONLY /health, /topology, /receive_delta (NO /api/* routes) and
+# defaults to PORT 8000 (env precedence: PORT, then PORT0, then 8000).
+python main.py                              # default port 8000; honors SEED_ID, ROLE, PORT
+SEED_ID=3 ROLE=meta PORT=8000 python main.py
+# or via uvicorn (point at whatever port you want)
+uvicorn main:app --host 0.0.0.0 --port 8000
+
+# Run the backend API server (backend/server.py) — this is the one the
+# dashboard talks to; it serves the /api/* routes (/api/health, /api/topology,
+# /api/seeds, /api/system-health, /api/llm/chat, /api/edcm/*, /api/sms/command)
+# and the /ws WebSocket. It listens on port 8001 (hardcoded in its
+# uvicorn.run(...) call), matching the frontend proxy below.
+cd backend && uvicorn server:app --host 0.0.0.0 --port 8001
+# or run the module directly (its __main__ block binds 0.0.0.0:8001):
+python backend/server.py
 
 # Frontend (from frontend/)
-cd frontend && npm install && npm start     # CRA dev server, proxies to :8001
+cd frontend && npm install && npm start     # CRA dev server; proxies to :8001
 npm run build                               # production build
 ```
+
+> The root `main.py` seed runner and `backend/server.py` are two different
+> servers. The React dashboard's `/api/*` calls are served by
+> `backend/server.py` on :8001 (the `"proxy": "http://localhost:8001"` target
+> in `frontend/package.json`), **not** by `main.py`. The seed runner does not
+> expose any `/api/*` route. If you point the dashboard at the seed runner you
+> will get 404s for every `/api/*` request.
 
 There is no Makefile, no `pyproject.toml`, and no Python lockfile. `pytest` has
 no config file — it auto-discovers `test_*.py` and `tests_*.py` under `tests/`.
