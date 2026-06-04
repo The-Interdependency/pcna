@@ -52,6 +52,32 @@ producing trained **weights**.
 
 ---
 
+<!-- BEGIN GENERATED:manifest -->
+<!-- Generated from pyproject + repo tree by .agents/skills/manifest/generate.py — DO NOT EDIT BY HAND. Refresh with `python .agents/skills/manifest/generate.py --write`. -->
+
+| Field | Value |
+|---|---|
+| Package | `pcna` |
+| Version | `0.1.0` |
+| Description | Prime Circular Neural Architecture — prime-indexed tensor creation + back-propagation (prime-tensor stack layer 1) |
+| Status | hmmm |
+| Python | >=3.10 |
+| License | AGPL-3.0-or-later |
+| Build backend | `setuptools.build_meta` |
+| Author(s) | Erin Patrick Spencer <wayseer@interdependentway.org> |
+| Repository | https://github.com/The-Interdependency/pcna |
+| Runtime dependencies | `numpy>=1.21` |
+| Optional extras | none |
+| Keywords | none |
+| CI workflows | `manifest-check.yml`, `python-app.yml` |
+| Top-level directories | `backend/` · `core/` · `frontend/` · `schemas/` · `scripts/` · `tests/` |
+
+<sub>Derived from `pyproject.toml` + the repo tree. Unknown fields surface as `hmmm` rather than a guess.</sub>
+<!-- END GENERATED:manifest -->
+> The block above is generated from `pyproject.toml` + the repo tree by the `manifest` living-spec tool (`.agents/skills/manifest/`) and gated in CI (`.github/workflows/manifest-check.yml`) — do not hand-edit between the markers; run `python .agents/skills/manifest/generate.py --write` after changing version/deps/layout.
+
+---
+
 ## Repository Layout
 
 ```

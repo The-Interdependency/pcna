@@ -10,6 +10,7 @@ Installed skills:
 - `msdmd/` — Module Self-Declared Metadata Markdown
 - `test-build/` — test contract metadata blocks
 - `meta-module-build/` — metadata-first module scaffolding
+- `manifest/` — living-spec manifest generator (vendored from `The-Interdependency/skill-lib@ddec346`; gated by `.github/workflows/manifest-check.yml`)
 
 Agents working in this repo should read `meta-module-build/SKILL.md` before
 creating new modules, routes, services, schemas, adapters, workers, engines,

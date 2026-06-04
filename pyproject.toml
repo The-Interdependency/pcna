@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pcna"
+version = "0.1.0"
+description = "Prime Circular Neural Architecture — prime-indexed tensor creation + back-propagation (prime-tensor stack layer 1)"
+readme = "README.md"
+license = { text = "AGPL-3.0-or-later" }
+authors = [
+  { name = "Erin Patrick Spencer", email = "wayseer@interdependentway.org" }
+]
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.21"]
+
+[project.urls]
+Repository = "https://github.com/The-Interdependency/pcna"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["core*"]
