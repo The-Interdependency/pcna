@@ -20,3 +20,6 @@ Repository = "https://github.com/The-Interdependency/pcna"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["core*"]
+# core/ is a PEP 420 namespace package (no __init__.py); enable namespace
+# discovery so it is reliably included in the sdist/wheel.
+namespaces = true
