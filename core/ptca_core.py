@@ -5,6 +5,27 @@ Each instance self-declares: name, symbol, role, n, seed.
 Tensor shape: [N, DIMS=4, PHASES=7, HEPT_SITES=7]
 """
 
+# === MODULE_BUILD ===
+# id: pcna_ptca_core
+#   module_name: ptca_core
+#   module_kind: engine
+#   summary: Base prime-ring tensor (shape [N,DIMS=4,PHASES=7,HEPT_SITES=7]) with heptagram Euler-step propagation and coherence = 1 - |ring - hub|_mean; substrate for Phi/Psi/Omega/Sigma.
+#   owner: Erin Spencer
+#   public_surface: PTCACore, DIMS, PHASES, HEPT_SITES
+#   internal_surface: _adj_distances, PTCACore._adjacents, _propagate_node, _recompute_coherence
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: none
+#   since: 2026-06-02
+#   unresolved: none
+# === END MODULE_BUILD ===
+
 import math
 import time
 import numpy as np

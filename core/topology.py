@@ -5,6 +5,28 @@ This implementation maps compute-shard neighbors to global seed IDs so the
 rest of the system can route using absolute ids. It also provides simple
 serialization for HTTP responses.
 """
+
+# === MODULE_BUILD ===
+# id: pcna_topology
+#   module_name: topology
+#   module_kind: engine
+#   summary: Stable seed-id topology — maps compute-shard neighbors to global seed IDs, computes heptagram neighbors and sentinel scan paths, and serializes to JSON for HTTP responses.
+#   owner: Erin Spencer
+#   public_surface: PCNATopology, Seed, SeedRole
+#   internal_surface: _initialize_topology, _heptagram_neighbors
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: tests/tests_topology.py
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: none
+#   since: 2026-06-02
+#   unresolved: none
+# === END MODULE_BUILD ===
+
 from dataclasses import dataclass
 from enum import Enum
 from typing import Dict, List, Optional

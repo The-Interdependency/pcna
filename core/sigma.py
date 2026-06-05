@@ -8,6 +8,27 @@ whenever watched files change.
 N=41, seed=41 — observer substrate
 """
 
+# === MODULE_BUILD ===
+# id: pcna_sigma
+#   module_name: sigma
+#   module_kind: engine
+#   summary: N=41 filesystem observer ring wrapping PTCACore; tracks watched file mtimes and drains content-changed events on a content_interval cadence, injecting coherence into Psi.
+#   owner: Erin Spencer
+#   public_surface: SigmaRing, get_sigma, N, SEED
+#   internal_surface: _sigma, SigmaRing._core, SigmaRing._watched, SigmaRing._pending, SigmaRing._last_check
+#   auth_boundary: none
+#   storage_boundary: read
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites; callers already degrade gracefully if it raises
+#   requires: pcna_ptca_core
+#   since: 2026-06-02
+#   unresolved: structural_interval is stored but never acted on (Known Issues)
+# === END MODULE_BUILD ===
+
 import os
 import time
 from typing import Optional

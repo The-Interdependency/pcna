@@ -1,3 +1,24 @@
+# === MODULE_BUILD ===
+# id: pcna_routing_loop
+#   module_name: routing_loop
+#   module_kind: worker
+#   summary: Intended GlobalRouterZero routing loop worker — currently only a print stub that announces initialization.
+#   owner: Erin Spencer
+#   public_surface: GlobalRouterZero
+#   internal_surface: none
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: none
+#   since: 2026-06-02
+#   unresolved: only a print stub — GlobalRouterZero not implemented (Known Stubs)
+# === END MODULE_BUILD ===
+
 import time
 import hashlib
 import json

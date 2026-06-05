@@ -6,6 +6,27 @@ This module provides the integration point for Moltbook, an AI-only social media
 When Moltbook API documentation becomes available, implement the following methods.
 """
 
+# === MODULE_BUILD ===
+# id: pcna_backend_moltbook_integration
+#   module_name: moltbook_integration
+#   module_kind: adapter
+#   summary: Stub connector for Moltbook (AI-only social platform); MoltbookClient and MoltbookMonitor return mock data pending real API documentation.
+#   owner: Erin Spencer
+#   public_surface: MoltbookClient, MoltbookMonitor
+#   internal_surface: none
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: none
+#   since: 2026-06-02
+#   unresolved: 100% mock data — all methods are TODOs pending Moltbook API (Known Stubs)
+# === END MODULE_BUILD ===
+
 import logging
 from typing import Dict, List, Optional
 from datetime import datetime

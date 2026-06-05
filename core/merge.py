@@ -9,6 +9,27 @@ Instance Merge Protocol — three modes for multi-instance PCNA mesh.
 Operates on PCNAEngine instances containing PTCACore + MemoryCore + GuardianTensor.
 """
 
+# === MODULE_BUILD ===
+# id: pcna_merge
+#   module_name: merge
+#   module_kind: engine
+#   summary: Stateless multi-instance merge operator for PCNAEngine meshes with three modes (absorb, fork, converge) via federated averaging; all output dicts use theta_* keys.
+#   owner: Erin Spencer
+#   public_surface: InstanceMerge
+#   internal_surface: _fed_avg, _blend_core
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: pcna_ptca_core, pcna_pcna
+#   since: 2026-06-02
+#   unresolved: fork() time-seeds its RNG — rapid calls may collide (Known Issues)
+# === END MODULE_BUILD ===
+
 import time
 import numpy as np
 from .ptca_core import PTCACore

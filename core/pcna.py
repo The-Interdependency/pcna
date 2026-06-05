@@ -25,6 +25,27 @@ Backprop:
 reward(winner, outcome) → nudge all three PTCA cores + guardian + memory flush
 """
 
+# === MODULE_BUILD ===
+# id: pcna_pcna
+#   module_name: pcna
+#   module_kind: engine
+#   summary: Six-ring PCNA inference engine (phi/psi/omega/theta/memory_l/memory_s) running project->inject->propagate->ptca-seed->pcta-circle->coherence, with RING_WEIGHTS scoring and numpy checkpointing.
+#   owner: Erin Spencer
+#   public_surface: PCNAEngine, RING_WEIGHTS, WINNER_RINGS
+#   internal_surface: _tensor_to_b64, _b64_to_tensor, _CHECKPOINT_DIR, PCNAEngine._project, PCNAEngine._inject, PCNAEngine._propagate, PCNAEngine._ptca_seed_audit, PCNAEngine._pcta_circle_audit, PCNAEngine._coherence_score
+#   auth_boundary: none
+#   storage_boundary: write
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites; checkpoints under .checkpoints/ can be deleted
+#   requires: pcna_ptca_core, pcna_memory_core, pcna_theta
+#   since: 2026-06-02
+#   unresolved: none
+# === END MODULE_BUILD ===
+
 import base64
 import hashlib
 import io

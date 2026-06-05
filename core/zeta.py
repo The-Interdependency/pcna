@@ -34,6 +34,27 @@ Example: global=3, /system=5 means system-root paths are observed at full depth.
 
 """
 
+# === MODULE_BUILD ===
+# id: pcna_zeta
+#   module_name: zeta
+#   module_kind: engine
+#   summary: ZFAE evaluator that scores each assistant response via EDCM (no LLM) and nudges PCNAEngine.phi, with per-directory resolution control and a module-level singleton.
+#   owner: Erin Spencer
+#   public_surface: ZetaEngine, _zeta_engine
+#   internal_surface: _get_default_pcna, ZetaEngine._coherence_from_metrics, ZetaEngine._sigma_nudge_factors, ZetaEngine._theta_gate_factor
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: pcna_edcm, pcna_pcna, pcna_sigma
+#   since: 2026-06-02
+#   unresolved: none
+# === END MODULE_BUILD ===
+
 import time
 
 from collections import deque

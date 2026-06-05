@@ -1,3 +1,24 @@
+# === MODULE_BUILD ===
+# id: pcna_memory_core
+#   module_name: memory_core
+#   module_kind: engine
+#   summary: Parameterized in-memory ring (long-term N=19/seed=19, short-term N=17/seed=17) with round-robin write, content-addressed query, and flush_to() transfer on positive reward.
+#   owner: Erin Spencer
+#   public_surface: MemoryCore
+#   internal_surface: _recompute_hub_avg, _reset
+#   auth_boundary: none
+#   storage_boundary: none
+#   network_boundary: none
+#   user_data_boundary: none
+#   admin_only: false
+#   tests: hmmm
+#   rollout: default_enabled
+#   rollback: remove import and call sites
+#   requires: none
+#   since: 2026-06-02
+#   unresolved: query() is defined but never called anywhere (Known Issues)
+# === END MODULE_BUILD ===
+
 import time
 import numpy as np
 
