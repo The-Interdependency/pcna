@@ -6,7 +6,7 @@ This file provides guidance to Claude Code and other AI assistants working in th
 
 ## Project Overview
 
-PCNA (Prime Circular Neural Architecture) is a deterministic, prime-indexed circular graph system for modular compute and real-time diagnostics. Compute and diagnostics are organized into 61 seeds on a unit-circle address space with heptagram (7-site) routing; core ring tensors use N=53 (prime) to avoid harmonic aliasing.
+PCNA (Prime Circle Neural Architecture) is a deterministic, prime-indexed circular graph system for modular compute and real-time diagnostics. Compute and diagnostics are organized into 61 seeds on a unit-circle address space with heptagram (7-site) routing; core ring tensors use N=53 (prime) to avoid harmonic aliasing.
 
 It has two distinct layers plus a UI:
 
@@ -27,18 +27,22 @@ The canonical upstream is `The-Interdependency/a0`. Features are ported from the
 The org-wide canonical role-and-boundary map for the prime-tensor compute family
 is `The-Interdependency/interdependent-lib : docs/prime-tensor-stack.md` (the
 single source of truth; it moves no theorem/proof/empirical status between repos).
-In that map, PCNA's **canonical architectural role** is **layer 1**: it creates
-the prime-indexed tensors and owns **back-propagation** — the only differentiable
-layer — composing **7 tensors per circle** (the circle is itself a tensor) and
-producing trained **weights**.
+In that map, PCNA (**Prime Circle Neural Architecture**) holds **layer 1**: it
+arranges tensors as **circles** in a standard back-propagating neural
+architecture and owns **back-propagation** — the only differentiable layer —
+offering those circles to PCTA and producing trained **weights**. Composition
+counts are **variable** (a circle may carry any number of tensors); the only
+invariant is that every circle is itself a tensor. (This repo's concrete
+runtime counts — N=53 ring tensors, 61 seeds — are its own design choices, not a
+structural cap from the canon.)
 
-| Layer | Member | Role (per canon) |
-|-------|--------|------------------|
-| **1 (PCNA)** | `pcna` | Tensor/circle creation + back-propagation → **weights** (7 tensors/circle) |
-| 2 | `pcta` *(repo forthcoming)* | Circles → seeds → structural motion |
-| 3 | `ptca` / `ptca-lib` | Seeds → core → structural motion |
-| Inference | `zfae` *(runtime in `a0`)* | Infers from PCNA weights + PCTA/PTCA motion |
-| Guardian | `pcea` | Orthogonal — seals weights/state (not a layer) |
+| Layer | Member | Expansion | Role (per canon) |
+|-------|--------|-----------|------------------|
+| **1 (PCNA)** | `pcna` | Prime Circle Neural Architecture | Tensors → circles in a back-propagating NN → **weights**; offers circles to PCTA |
+| 2 | `pcta` | Prime Circled Tensor Architecture | Circles → seeds → structural motion |
+| 3 | `ptca` / `ptca-lib` | Prime Tensor Core Architecture | Seeds → core → structural motion |
+| Inference | `zfae` *(runtime in `a0`)* | Zeta Function Alpha Echo | Uses PCNA weights + PCNA circles / PCTA seeds / PTCA cores as phase-harmonic propagation + auditing |
+| Guardian | `pcea` | Prime Circular Encryption Algorithm | Orthogonal — "last state as key for this state" at every layer (not a layer) |
 
 > **hmmm — inference-boundary tension.** This repo's code currently describes
 > PCNA as a "six-ring inference engine" (Φ/Ψ/Ω/Θ/Memory, 61 seeds, FastAPI

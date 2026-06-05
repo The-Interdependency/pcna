@@ -1,4 +1,4 @@
-# PCNA — Prime Circular Neural Architecture
+# PCNA — Prime Circle Neural Architecture
 
 Deterministic, prime-indexed circular graph architecture for modular compute and real-time diagnostics.
 
@@ -8,12 +8,16 @@ Deterministic, prime-indexed circular graph architecture for modular compute and
 
 In the org-wide canonical map (`The-Interdependency/interdependent-lib :
 docs/prime-tensor-stack.md`, the single source of truth — it moves no
-theorem/proof status between repos), PCNA is **stack layer 1**: it creates the
-prime-indexed tensors and owns **back-propagation** (the only differentiable
-layer), composing **7 tensors per circle** to produce trained **weights**.
-Layer 2 is PCTA (circles → seeds), layer 3 is PTCA (seeds → core), and
-**inference is ZFAE's layer** (runtime in `a0`; in-repo port `core/zeta.py`).
-PCEA is the orthogonal guardian (seals weights/state), not a layer.
+theorem/proof status between repos), PCNA (**Prime Circle Neural Architecture**)
+is **stack layer 1**: it arranges tensors as **circles** in a standard
+back-propagating NN (the only differentiable layer) and offers those circles to
+PCTA, producing trained **weights**. Composition counts are **variable** (any
+number of tensors per circle; the only invariant is that every circle is itself
+a tensor). Layer 2 is PCTA — Prime Circled Tensor Architecture (circles →
+seeds); layer 3 is PTCA — Prime Tensor Core Architecture (seeds → core); and
+**inference is ZFAE's layer** (Zeta Function Alpha Echo; runtime in `a0`, in-repo
+port `core/zeta.py`). PCEA is the orthogonal guardian — "last state as key for
+this state" at every layer — not a layer.
 
 > **hmmm:** the "Six-Ring Inference Engine" described below is what this repo's
 > code does **today**; per the canon, that inference role belongs to ZFAE, not
