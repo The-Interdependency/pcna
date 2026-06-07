@@ -16,7 +16,7 @@ It has two distinct layers plus a UI:
 
 **Stack:** Python 3.10 (CI target), NumPy / FastAPI / Uvicorn / Pydantic / aiohttp; React 18 + Tailwind on the frontend.
 **License:** dual-license in progress — see `LICENSE` (interim notice) and `LICENSE-COMMERCIAL.md`. Source headers reference Apache 2.0.
-**Version:** frontend `package.json` is `0.1.0`; the Python side is unversioned (no `pyproject.toml`/`setup.py`).
+**Version:** `0.1.0` — a root `pyproject.toml` now packages `core/` as the `pcna` distribution (deps: `numpy`); the frontend `package.json` is also `0.1.0`.
 
 The canonical upstream is `The-Interdependency/a0`. Features are ported from there and adapted. Development happens on feature branches; PRs go to `main`.
 
@@ -53,6 +53,32 @@ structural cap from the canon.)
 > tension is flagged as a `hmmm` and is **not** resolved here — the descriptions
 > below of what the code actually does remain accurate and authoritative for this
 > repo.
+
+---
+
+<!-- BEGIN GENERATED:manifest -->
+<!-- Generated from pyproject + repo tree by .agents/skills/manifest/generate.py — DO NOT EDIT BY HAND. Refresh with `python .agents/skills/manifest/generate.py --write`. -->
+
+| Field | Value |
+|---|---|
+| Package | `pcna` |
+| Version | `0.1.0` |
+| Description | Prime Circular Neural Architecture — prime-indexed tensor creation + back-propagation (prime-tensor stack layer 1) |
+| Status | hmmm |
+| Python | >=3.10 |
+| License | AGPL-3.0-or-later |
+| Build backend | `setuptools.build_meta` |
+| Author(s) | Erin Patrick Spencer <wayseer@interdependentway.org> |
+| Repository | https://github.com/The-Interdependency/pcna |
+| Runtime dependencies | `numpy>=1.21` |
+| Optional extras | none |
+| Keywords | none |
+| CI workflows | `manifest-check.yml`, `python-app.yml` |
+| Top-level directories | `backend/` · `core/` · `frontend/` · `schemas/` · `scripts/` · `tests/` |
+
+<sub>Derived from `pyproject.toml` + the repo tree. Unknown fields surface as `hmmm` rather than a guess.</sub>
+<!-- END GENERATED:manifest -->
+> The block above is generated from `pyproject.toml` + the repo tree by the `manifest` living-spec tool (`.agents/skills/manifest/`) and gated in CI (`.github/workflows/manifest-check.yml`) — do not hand-edit between the markers; run `python .agents/skills/manifest/generate.py --write` after changing version/deps/layout.
 
 ---
 
@@ -199,7 +225,9 @@ npm run build                               # production build
 > expose any `/api/*` route. If you point the dashboard at the seed runner you
 > will get 404s for every `/api/*` request.
 
-There is no Makefile, no `pyproject.toml`, and no Python lockfile. `pytest` has
+There is no Makefile and no Python lockfile. A root `pyproject.toml` packages
+`core/` as the `pcna` distribution (it does not affect the test loop —
+`conftest.py` still handles imports). `pytest` has
 no config file — it auto-discovers `test_*.py` and `tests_*.py` under `tests/`.
 The `pcna` bash CLI and `scripts/*.sh` target a supervisor-managed deployment
 (`supervisorctl`, `/api/system-health`), not the local dev loop above.
