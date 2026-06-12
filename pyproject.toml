@@ -7,7 +7,7 @@ name = "pcna"
 version = "0.1.0"
 description = "Prime Circular Neural Architecture — prime-indexed tensor creation + back-propagation (prime-tensor stack layer 1)"
 readme = "README.md"
-license = { text = "MIT" }
+license = { text = "MPL-2.0" }
 authors = [
   { name = "Erin Patrick Spencer", email = "wayseer@interdependentway.org" }
 ]

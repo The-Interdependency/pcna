@@ -15,7 +15,7 @@ It has two distinct layers plus a UI:
 - **frontend/** — a React (CRA) dashboard.
 
 **Stack:** Python 3.10 (CI target), NumPy / FastAPI / Uvicorn / Pydantic / aiohttp; React 18 + Tailwind on the frontend.
-**License:** MIT — see `LICENSE`. (Some source-file headers still reference Apache 2.0; updating those is a follow-up.)
+**License:** MPL-2.0 (weak copyleft — embed anywhere, but changes to these files must be published; relicensed from MIT) — see `LICENSE`. (Some source-file headers still reference Apache 2.0; updating those is a follow-up.)
 **Version:** `0.1.0` — a root `pyproject.toml` now packages `core/` as the `pcna` distribution (deps: `numpy`); the frontend `package.json` is also `0.1.0`.
 
 The canonical upstream is `The-Interdependency/a0`. Features are ported from there and adapted. Development happens on feature branches; PRs go to `main`.
@@ -66,7 +66,7 @@ structural cap from the canon.)
 | Description | Prime Circular Neural Architecture — prime-indexed tensor creation + back-propagation (prime-tensor stack layer 1) |
 | Status | hmmm |
 | Python | >=3.10 |
-| License | MIT |
+| License | MPL-2.0 |
 | Build backend | `setuptools.build_meta` |
 | Author(s) | Erin Patrick Spencer <wayseer@interdependentway.org> |
 | Repository | https://github.com/The-Interdependency/pcna |
@@ -306,7 +306,7 @@ React app in `frontend/`. Components: `TopologyVisualization`, `SystemHealthDash
 - Feature branches: `feat/<description>`, `fix/<description>`, `docs/<description>`, `claude/update-from-interdependency-a0-*`
 - Commit style: Conventional Commits (`feat(core):`, `fix(pcna):`, etc.)
 - Author: Erin Patrick Spencer (wayseer@interdependentway.org)
-- License: MIT (`LICENSE`); some source-file headers still reference Apache 2.0 (follow-up)
+- License: MPL-2.0 (weak copyleft — embed anywhere, but changes to these files must be published; relicensed from MIT) (`LICENSE`); some source-file headers still reference Apache 2.0 (follow-up)
 
 ## Agent module-build doctrine
 
