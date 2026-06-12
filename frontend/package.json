@@ -2,7 +2,7 @@
   "name": "pcna-dashboard",
   "version": "0.1.0",
   "private": true,
-  "license": "MIT",
+  "license": "MPL-2.0",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
