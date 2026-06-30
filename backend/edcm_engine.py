@@ -1,3 +1,4 @@
+# ratios: loc_comments=172:57 imports_exports=5:1 calls_definitions=59:9
 """
 EDCM (Entropy Dissonance Constraint Management) Analyzer
 
@@ -269,3 +270,4 @@ class EDCMAnalyzer:
                 "low": sum(1 for a in recent if a["monetization_value"] == "low"),
             },
         }
+# ratios: loc_comments=172:57 imports_exports=5:1 calls_definitions=59:9

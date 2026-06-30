@@ -1,3 +1,4 @@
+# ratios: loc_comments=129:31 imports_exports=4:1 calls_definitions=41:13
 """
 Θ (Theta) — N=29 prime-node microkernel ring.
   - Ragged circle counts per seed: circleCount[i] in [1..12]
@@ -182,3 +183,4 @@ def _shard_blueprint(bp_hash: str, n: int) -> list[str]:
         shard = bp_hash[start:start + BLUEPRINT_CHUNK_SIZE]
         shards.append(shard.ljust(BLUEPRINT_CHUNK_SIZE, "0"))
     return shards
+# ratios: loc_comments=129:31 imports_exports=4:1 calls_definitions=41:13

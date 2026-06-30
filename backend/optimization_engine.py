@@ -1,3 +1,4 @@
+# ratios: loc_comments=112:53 imports_exports=4:1 calls_definitions=29:7
 """
 Self-Optimization Engine for PCNA
 Monitors system health and automatically adjusts resources
@@ -195,3 +196,4 @@ class SelfOptimizer:
             }
         
         return {"trend": "stable"}
+# ratios: loc_comments=112:53 imports_exports=4:1 calls_definitions=29:7

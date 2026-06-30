@@ -1,3 +1,4 @@
+# ratios: loc_comments=99:110 imports_exports=4:3 calls_definitions=24:12
 """
 Moltbook Integration Stub
 AI-only social media platform connector
@@ -254,3 +255,4 @@ async def example_usage():
 if __name__ == "__main__":
     import asyncio
     asyncio.run(example_usage())
+# ratios: loc_comments=99:110 imports_exports=4:3 calls_definitions=24:12

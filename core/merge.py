@@ -1,3 +1,4 @@
+# ratios: loc_comments=117:30 imports_exports=4:1 calls_definitions=43:6
 # 118:8
 """
 Instance Merge Protocol — three modes for multi-instance PCNA mesh.
@@ -171,3 +172,4 @@ class InstanceMerge:
             "timestamp": time.time(),
         }
 # 118:8
+# ratios: loc_comments=117:30 imports_exports=4:1 calls_definitions=43:6

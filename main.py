@@ -1,3 +1,4 @@
+# ratios: loc_comments=100:26 imports_exports=9:7 calls_definitions=40:12
 """
 FastAPI seed runner for PCNA. This file provides a minimal runnable seed
 process that can act as compute/meta/global/sentinel. It is intentionally
@@ -157,3 +158,4 @@ if __name__ == "__main__":
     # Useful for local development: honor PORT env var and SEED_ID/ROLE
     port = int(os.getenv("PORT", os.getenv("PORT0", "8000")))
     uvicorn.run("main:app", host="0.0.0.0", port=port, log_level="info")
+# ratios: loc_comments=100:26 imports_exports=9:7 calls_definitions=40:12

@@ -1,3 +1,4 @@
+# ratios: loc_comments=244:74 imports_exports=20:19 calls_definitions=99:24
 """
 FastAPI Backend for PCNA Agent System
 Integrates: PCNA topology, LLM abstraction, self-optimization, SMS, MongoDB
@@ -388,3 +389,4 @@ async def websocket_endpoint(websocket: WebSocket):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8001)
+# ratios: loc_comments=244:74 imports_exports=20:19 calls_definitions=99:24

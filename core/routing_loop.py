@@ -1,3 +1,4 @@
+# ratios: loc_comments=10:23 imports_exports=5:1 calls_definitions=2:2
 # === MODULE_BUILD ===
 # id: pcna_routing_loop
 #   module_name: routing_loop
@@ -35,3 +36,4 @@ class GlobalRouterZero:
 
 if __name__ == "__main__":
     GlobalRouterZero()
+# ratios: loc_comments=10:23 imports_exports=5:1 calls_definitions=2:2

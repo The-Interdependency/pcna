@@ -1,3 +1,4 @@
+# ratios: loc_comments=69:66 imports_exports=3:1 calls_definitions=13:7
 """
 SMS Service for PCNA System Check-ins
 Supports mock mode for development, real Twilio integration for production
@@ -162,3 +163,4 @@ Immediate attention recommended."""
     def get_message_history(self, limit: int = 10):
         """Get recent message history"""
         return self.message_history[-limit:]
+# ratios: loc_comments=69:66 imports_exports=3:1 calls_definitions=13:7

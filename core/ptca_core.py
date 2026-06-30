@@ -1,3 +1,4 @@
+# ratios: loc_comments=119:31 imports_exports=3:1 calls_definitions=33:11
 # 119:9
 """
 PTCACore — parameterized prime-ring tensor with heptagram propagation.
@@ -169,3 +170,4 @@ class PTCACore:
             "node_coherence": [round(float(v), 4) for v in self.node_coherence],
         }
 # 119:9
+# ratios: loc_comments=119:31 imports_exports=3:1 calls_definitions=33:11

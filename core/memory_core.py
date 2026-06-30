@@ -1,3 +1,4 @@
+# ratios: loc_comments=71:21 imports_exports=2:1 calls_definitions=22:9
 # === MODULE_BUILD ===
 # id: pcna_memory_core
 #   module_name: memory_core
@@ -104,3 +105,4 @@ class MemoryCore:
             "write_count": self.write_count,
             "flush_count": self.flush_count,
         }
+# ratios: loc_comments=71:21 imports_exports=2:1 calls_definitions=22:9

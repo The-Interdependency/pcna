@@ -1,3 +1,4 @@
+# ratios: loc_comments=33:13 imports_exports=2:2 calls_definitions=15:2
 """
 tests/proof_check.py
 Empirical verification of PCNA Spectral Graph properties.
@@ -55,3 +56,4 @@ if __name__ == "__main__":
     
     # PCNA Heptagram (The 7:3 star)
     analyze_topology("PCNA Heptagram", [3])
+# ratios: loc_comments=33:13 imports_exports=2:2 calls_definitions=15:2
