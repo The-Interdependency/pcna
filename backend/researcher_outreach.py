@@ -1,3 +1,4 @@
+# ratios: loc_comments=186:108 imports_exports=7:3 calls_definitions=47:11
 """
 Researcher Outreach Module
 Manages outreach to AI/ML researchers interested in PCNA and related topics
@@ -356,3 +357,4 @@ async def example_usage():
 if __name__ == "__main__":
     import asyncio
     asyncio.run(example_usage())
+# ratios: loc_comments=186:108 imports_exports=7:3 calls_definitions=47:11

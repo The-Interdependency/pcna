@@ -1,3 +1,4 @@
+# ratios: loc_comments=42:40 imports_exports=3:2 calls_definitions=31:3
 """
 core/helix_vis.py
 Visualizes the spectral state of a 7-seed Meta Router.
@@ -100,3 +101,4 @@ def visualize():
 
 if __name__ == "__main__":
     visualize()
+# ratios: loc_comments=42:40 imports_exports=3:2 calls_definitions=31:3

@@ -1,3 +1,4 @@
+# ratios: loc_comments=207:44 imports_exports=11:1 calls_definitions=73:18
 # 198:61
 
 """
@@ -478,3 +479,4 @@ def _get_default_pcna():
     return _default_pcna
 
 # 198:61
+# ratios: loc_comments=207:44 imports_exports=11:1 calls_definitions=73:18

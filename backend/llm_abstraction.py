@@ -1,3 +1,4 @@
+# ratios: loc_comments=140:56 imports_exports=6:2 calls_definitions=33:14
 """
 LLM Orchestrator - Hot-swappable multi-provider LLM abstraction
 Supports: OpenAI, Anthropic, Google Gemini with automatic fallback
@@ -232,3 +233,4 @@ class LLMOrchestrator:
         Generate the message:"""
         
         return await self.chat(prompt, provider="anthropic")  # Claude is best for empathetic content
+# ratios: loc_comments=140:56 imports_exports=6:2 calls_definitions=33:14

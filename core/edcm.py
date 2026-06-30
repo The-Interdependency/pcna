@@ -1,3 +1,4 @@
+# ratios: loc_comments=65:33 imports_exports=2:4 calls_definitions=23:4
 """
 EDCM metrics — six-family coherence measurement.
 
@@ -113,3 +114,4 @@ def delta_between(a: dict[str, float], b: dict[str, float]) -> dict[str, float]:
     for m in METRIC_NAMES:
         result[f"delta_{m}"] = round((b.get(m, 0) - a.get(m, 0)), 4)
     return result
+# ratios: loc_comments=65:33 imports_exports=2:4 calls_definitions=23:4

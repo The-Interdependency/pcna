@@ -1,3 +1,4 @@
+# ratios: loc_comments=88:54 imports_exports=3:3 calls_definitions=22:10
 """
 PCNA topology: stable mapping of seed ids and neighbor computation.
 
@@ -168,3 +169,4 @@ class PCNATopology:
                 "neighbors": seed.neighbors or [],
             }
         return out
+# ratios: loc_comments=88:54 imports_exports=3:3 calls_definitions=22:10

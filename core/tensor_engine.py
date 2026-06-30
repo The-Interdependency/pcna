@@ -1,3 +1,4 @@
+# ratios: loc_comments=56:42 imports_exports=3:2 calls_definitions=23:7
 """
 Tensor engine primitives: TensorState, simple spectral descriptor, and
 a MarkovRecursion updater that enforces (approximate) mass conservation.
@@ -114,3 +115,4 @@ class MarkovRecursion:
 
         # Return new TensorState reusing actor/time/context arrays
         return TensorState(actor=state.actor, time=state.time, metric=new_metric, context=state.context)
+# ratios: loc_comments=56:42 imports_exports=3:2 calls_definitions=23:7

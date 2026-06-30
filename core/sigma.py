@@ -1,3 +1,4 @@
+# ratios: loc_comments=70:31 imports_exports=5:2 calls_definitions=12:13
 """
 Σ (Sigma) — Filesystem Observer Ring
 
@@ -125,3 +126,4 @@ def get_sigma() -> SigmaRing:
     if _sigma is None:
         _sigma = SigmaRing()
     return _sigma
+# ratios: loc_comments=70:31 imports_exports=5:2 calls_definitions=12:13
