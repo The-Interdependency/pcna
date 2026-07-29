@@ -1,3 +1,6 @@
+> **ARCHIVED 2026-07-28.** Superseded by [ptcna](https://github.com/The-Interdependency/ptcna).
+> This repo is retained read-only for provenance. Do not build against it.
+
 # PCNA — Prime Circle Neural Architecture
 
 Deterministic, prime-indexed circular graph architecture for modular compute and real-time diagnostics.
